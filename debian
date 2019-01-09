@@ -7,6 +7,8 @@ sudo apt-get -y autoremove
 
 # Install git
 sudo apt-get install -y git
+git config --global user.name Traap
+git config --global user.email gary.a.howard@mac.com
 
 # Install ruby and required gems 
 sudo apt-get install -y ruby-full
@@ -19,9 +21,14 @@ clone http://github.com/Traap/emend.git
 cd emend
 bundle install
 bundle exec rake
-sudo bundle exec rake install
+bundle exec rake install
+rake --format documentation
 
 # Clone and emend this system. 
 cd ..
 clone http://github.com/Traap/emend-computer.git
 cd emend-computer
+
+# Windows setup.
+# Note:  Only linux commands are ran when run from a wsl distro.
+emend --verbose --nodryrun --bundle windows
