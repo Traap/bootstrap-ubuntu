@@ -19,8 +19,10 @@ sudo apt-get install -y vim-gtk
 
 # Install git
 # sudo apt-get install -y git
-# git config --global user.name Traap
-# git config --global user.email gary.a.howard@mac.com
+
+# Install gcc and make
+sudo apt-get install -y make
+sudo apt-get install -y gcc
 
 # Install ruby and required gems
 # Is sudo really needed?
