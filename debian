@@ -7,20 +7,20 @@ sudo apt-get -y autoremove
 
 # Redirect your linux user to your windows user.
 # vi /etc/passwd
-gary:x:1000:1000:,,,:/mnt/c/Users/gary:/bin/bash
+# gary:x:1000:1000:,,,:/mnt/c/Users/gary:/bin/bash
 
 # VcXsrv for Copy & Paste
 # Note: Use Power Shell with Administrator rights.
 # choco install -y vcxsrv
 
 # Install xsel for Copy and Paste
-sudo apt-get -y xsel
-sudo apt-get -y vim-gtk
+sudo apt-get install -y xsel
+sudo apt-get install -y vim-gtk
 
 # Install git
-sudo apt-get install -y git
-git config --global user.name Traap
-git config --global user.email gary.a.howard@mac.com
+# sudo apt-get install -y git
+# git config --global user.name Traap
+# git config --global user.email gary.a.howard@mac.com
 
 # Install ruby and required gems
 # Is sudo really needed?
