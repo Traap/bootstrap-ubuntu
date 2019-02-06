@@ -20,9 +20,12 @@ sudo apt-get install -y vim-gtk
 # Install git
 # sudo apt-get install -y git
 
-# Install gcc and make
+# Make and c/c++ compiler
 sudo apt-get install -y make
 sudo apt-get install -y gcc
+
+# Keyserver, CRL, and OCSP access for GnuPG
+suso apt-get install -y dirmngr
 
 # Install ruby and required gems
 # Is sudo really needed?
