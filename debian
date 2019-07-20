@@ -5,9 +5,9 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y autoremove
 
-# Redirect your linux user to your windows user.
-# vi /etc/passwd
-# gary:x:1000:1000:,,,:/mnt/c/Users/gary:/bin/bash
+~~# Redirect your linux user to your windows user.~~
+~~# vi /etc/passwd~~
+~~# gary:x:1000:1000:,,,:/mnt/c/Users/gary:/bin/bash~~
 
 # VcXsrv for Copy & Paste
 # Note: Use Power Shell with Administrator rights.
