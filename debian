@@ -37,10 +37,12 @@ sudo apt-get install -y apt-transport-https
 sudo apt-get update
 sudo apt-get install miktex
 
+# Install rbenv
+sudo apt-get install -y rbenv
+
 # Install ruby and required gems
-# Is sudo really needed?
 sudo apt-get install -y ruby-full
-sudo gem install bundler
+gem install bundler
 
 # Clone and build emend. 
 mkdir git
