@@ -17,8 +17,11 @@ sudo apt-get -y autoremove
 sudo apt-get install -y xsel
 sudo apt-get install -y vim-gtk
 
+# Install neovim
+sudo apt-get install -y neovim
+
 # Install git
-# sudo apt-get install -y git
+sudo apt-get install -y git
 
 # Make and c/c++ compiler
 sudo apt-get install -y make
