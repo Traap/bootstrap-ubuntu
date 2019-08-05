@@ -35,7 +35,7 @@ sudo apt-get install miktex
 
 # Install rbenv
 # See: https://linuxize.com/post/how-to-install-ruby-on-debian-9/
-sudo apt update
+sudo apt-get update -y
 sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison \
      build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
      
