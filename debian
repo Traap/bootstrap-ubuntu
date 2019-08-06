@@ -37,7 +37,8 @@ sudo apt-get install miktex
 # See: https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 sudo apt-get update -y
 sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison \
-     build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
+     build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev \
+     libssl-dev libgdbm-dev
      
 curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash -
 
@@ -46,8 +47,12 @@ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 source ~/.bashrc
 
-# Install ruby and required gems
-gem install bundler
+# Install ruby
+rbenv install 2.6.3
+rbenv global 2.6.3
+
+# Install Ruby bundler
+sudo apt-get install -y ruby-bundler
 
 # Clone and build emend. 
 mkdir git
