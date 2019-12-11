@@ -24,20 +24,20 @@ sudo apt-get install -y make
 sudo apt-get install -y gcc
 
 # Keyserver, CRL, and OCSP access for GnuPG
-suso apt-get install -y dirmngr
+suso apt-get -y install dirmngr
 
 # MikTeX
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D6BC243565B2087BC3F897C9277A7293F59E4889
 echo "deb http://miktex.org/download/debian stretch universe" | sudo tee /etc/apt/sources.list.d/miktex.list
-sudo apt-get install -y apt-transport-https
-sudo apt-get update
-sudo apt-get install miktex
+sudo apt-get -y install apt-transport-https
+sudo apt-get -y update
+sudo apt-get -y install miktex
 
 # Install rbenv
 # See: https://linuxize.com/post/how-to-install-ruby-on-debian-9/
-sudo apt-get update -y
-sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison \
-     build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev \
+sudo apt-get -y update
+sudo apt-get -y install git curl libssl-dev libreadline-dev zlib1g-dev autoconf \
+     bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev \
      libssl-dev libgdbm-dev
      
 curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash -
@@ -52,7 +52,7 @@ rbenv install 2.6.3
 rbenv global 2.6.3
 
 # Install Ruby bundler
-sudo apt-get install -y ruby-bundler
+sudo apt-get -y install ruby-bundler
 gem install bundler
 
 # Clone and build emend. 
@@ -63,6 +63,11 @@ cd emend
 bundle install
 bundle exec rake
 bundle exec rake install
+
+# Note: Ubuntu needs another ruby step.
+sudo apt-get -y install ruby-rspec-core
+
+# Rspec doc
 rspec --format documentation
 
 # Clone and emend this system. 
