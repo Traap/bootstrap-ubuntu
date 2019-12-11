@@ -63,7 +63,7 @@ cd emend
 bundle install
 bundle exec rake
 bundle exec rake install
-rake --format documentation
+rspec --format documentation
 
 # Clone and emend this system. 
 cd ..
