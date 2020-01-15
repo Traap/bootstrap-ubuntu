@@ -60,9 +60,7 @@ mkdir git
 cd git
 clone http://github.com/Traap/emend.git
 cd emend
-bundle install
-bundle exec rake
-bundle exec rake install
+rake build:emend
 
 # Note: Ubuntu needs another ruby step.
 sudo apt-get -y install ruby-rspec-core
