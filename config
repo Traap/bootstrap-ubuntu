@@ -1,0 +1,26 @@
+#!/bin/bash
+# ------------------------------------------------------------------------------
+# Useful documentation.
+#   https://miktex.org/howto/install-miktex-unx
+#   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
+
+# ------------------------------------------------------------------------------
+# Define product version now.
+# Notes:
+#   1) 0 == false && 1 == true ... Duh!
+#   2) Options are listed alphabetically only because I scan them faster.
+
+bashrcFlag=1
+emendFlag=0  
+emendFlag=0  
+gitEmail="gary.a.howard@mac.com"
+gitName="Traap"
+gpgKey='D6BC243565B2087BC3F897C9277A7293F59E4889'
+hostsFlag=1
+miktexFlag=1
+miktexSource='ubuntu bionic universe'
+rbenvFlag=1
+rubyVersion='2.7.1'
+ubuntuFlag=1
+wslFlag=1
+xWindowsFlag=1

@@ -1,0 +1,99 @@
+#!/bin/bash
+# ------------------------------------------------------------------------------
+# Useful documentation.
+#   https://miktex.org/howto/install-miktex-unx
+#   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
+
+# ------------------------------------------------------------------------------
+# Source configuraiton options.
+[[ -f config ]] && source config || (echo "config not found." && exit)
+
+# ------------------------------------------------------------------------------
+# Update OS
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y autoremove
+
+# ------------------------------------------------------------------------------
+# Install my default packages. 
+sudo apt-get install -y curl dirmngr fzf gcc git make neovim npm ranger
+
+# ------------------------------------------------------------------------------
+# Configure git email and user. 
+git config --global user.email "$gitEmail"
+git config --global user.name "$gitName"
+
+# ------------------------------------------------------------------------------
+# MiKTeX
+if [[ $miktexFlag == 1 ]]; then
+
+  # Register GPG key for Ubuntu and Linux Mint.
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys $gpgKey
+
+  # Installation source: Ubuntu 18.04, Linux Mint 19.
+  echo "deb http://miktex.org/download/${miktexSource}" \
+    | sudo tee /etc/apt/sources.list.d/miktex.list
+
+  # MiKTeX
+  sudo apt-get -y update
+  sudo apt-get -y install miktex
+
+  # Finish MikTeX setup.
+  sudo miktexsetup --shared=yes
+
+  # LaTeX make
+  sudo apt-get -y install latexmk
+
+fi 
+
+# ------------------------------------------------------------------------------
+# Force replace /etc/wsl.config
+[[ wslFlag == 1 ]] \
+  && [[ -f wsl.config ]] \
+  && sudo mv -fv wsl.config /etc/wsl.conf \
+  && echo "/etc/wsl.config replaced."
+
+# ------------------------------------------------------------------------------
+# Force replace /etc/hosts 
+[[ hostsFlag == 1 ]] \
+  && [[ -f hosts ]] \
+  && sudo mv -fv hosts /etc/hosts \
+  && echo "/etc/hosts replaced."
+
+# ------------------------------------------------------------------------------
+# Install rbenv
+if [[ $rbenvFlag == 1 ]]; then
+
+  # Install rbenv dependencies. 
+  sudo apt-get -y update
+  sudo apt-get -y install autoconf bison build-essential libffi-dev \
+    libgdbm-dev libncurses5-dev libreadline-dev libreadline-dev libssl-dev \
+    libssl-dev libyaml-dev zlib1g-dev
+
+  # Install rbenv.
+  url='https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer'
+  curl -sL $url | bash -
+
+  # Note: Ubuntu needs another ruby step.
+  [[ $ubuntuFlag == 1 ]]  \
+    && sudo apt-get -y install ruby-rspec-core \
+    && echo "ruby-rspec-core installed."
+
+  # Add RBENV to your .bashrc
+  [[ $bashrcFlag == 1 ]] \
+    && echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc \
+    && echo 'eval "$(rbenv init -)"' >> ~/.bashrc \
+    && source ~/.bashrc \
+    && echo ".bashrc updated."
+fi
+
+# ------------------------------------------------------------------------------
+# Note: Use PowerShell with Administrator rights.  I use VcXsrv to support
+# X-windows clients when needed.  I use choco to install packages on Windows.
+# The powershell command is listed for reference only.
+# choco install -y vcxsr
+# 
+# X Windos support. 
+[[ $xWindowsFlag == 1 ]] \
+  && sudo sudo apt-get install -y vim-gtk xsel \
+  && echo "X Windows support installed."

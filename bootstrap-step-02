@@ -1,0 +1,41 @@
+#!/bin/bash
+# ------------------------------------------------------------------------------
+# Useful documentation.
+#   https://miktex.org/howto/install-miktex-unx
+#   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
+
+# ------------------------------------------------------------------------------
+# Source configuraiton options.
+[[ -f config ]] && source config || (echo "config not found." && exit)
+
+# ------------------------------------------------------------------------------
+# Install ruby
+rbenv init
+rbenv install $rubyVersion 
+rbenv global $rubyVersion 
+
+# Install Ruby bundler
+sudo apt-get -y install ruby-bundler
+gem install bundler
+
+# ------------------------------------------------------------------------------
+# Clone and build emend, when needed.
+if [[ $emendFlag == 1 ]]; then
+  mkdir git
+  cd git
+  clone http://github.com/Traap/emend.git
+  cd emend
+  rake build:emend
+  
+  # Rspec doc
+  rspec --format documentation
+  
+  # Clone and emend this system. 
+  cd ..
+  clone http://github.com/Traap/emend-computer.git
+  cd emend-computer
+  
+  # Personalize Traap's environment.
+  # Note:  Only linux commands are ran when run from a wsl distro.
+  emend --verbose --nodryrun --bundle debian
+fi
