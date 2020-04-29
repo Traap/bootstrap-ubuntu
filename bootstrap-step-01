@@ -38,8 +38,9 @@ if [[ $miktexFlag == 1 ]]; then
   sudo apt-get -y update
   sudo apt-get -y install miktex
 
-  # Finish MikTeX setup.
-  sudo miktexsetup --shared=yes
+  # Finish MikTeX shared installation setup.
+  sudo miktexsetup --shared=yes finish
+  sudo initexmf --admin --set-config-value [MPM]AutoInstall=1
 
   # LaTeX make
   sudo apt-get -y install latexmk
