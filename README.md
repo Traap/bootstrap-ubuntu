@@ -46,5 +46,5 @@ All coponents that can be installed without needing to restart a shell.
 ## Step 2
 All components that require the shell to be restarted.
 ``` bash
-cat config
+./bootstrap-step-02
 ```
