@@ -1,15 +1,18 @@
 #!/bin/bash
-# ------------------------------------------------------------------------------
+# {{{ Usefull URLs
+#
 # Useful documentation.
 #   https://miktex.org/howto/install-miktex-unx
 #   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 
-# ------------------------------------------------------------------------------
-# Source configuraiton options.
+# -------------------------------------------------------------------------- }}}
+# {{{ Source configuraiton options.
+
 [[ -f config ]] && source config || (echo "config not found." && exit)
 
-# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------------- }}}
 # Install ruby
+
 rbenv init
 rbenv install $rubyVersion 
 rbenv global $rubyVersion 
@@ -18,8 +21,9 @@ rbenv global $rubyVersion
 sudo apt-get -y install ruby-bundler
 gem install bundler
 
-# ------------------------------------------------------------------------------
-# Clone and build emend, when needed.
+# -------------------------------------------------------------------------- }}}
+# {{{ Clone and build emend, when needed.
+
 if [[ $emendFlag == 1 ]]; then
   mkdir git
   cd git
@@ -39,3 +43,5 @@ if [[ $emendFlag == 1 ]]; then
   # Note:  Only linux commands are ran when run from a wsl distro.
   emend --verbose --nodryrun --bundle debian
 fi
+
+# -------------------------------------------------------------------------- }}}

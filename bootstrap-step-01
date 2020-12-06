@@ -1,30 +1,36 @@
 #!/bin/bash
-# ------------------------------------------------------------------------------
+# {{{ Usefull URLs
+#
 # Useful documentation.
 #   https://miktex.org/howto/install-miktex-unx
 #   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 
-# ------------------------------------------------------------------------------
-# Source configuraiton options.
+# -------------------------------------------------------------------------- }}}
+# {{{ Source configuraiton options.
+
 [[ -f config ]] && source config || (echo "config not found." && exit)
 
-# ------------------------------------------------------------------------------
-# Update OS
+# -------------------------------------------------------------------------- }}}
+# {{{ Update OS
+
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y autoremove
 
-# ------------------------------------------------------------------------------
-# Install my default packages. 
+# -------------------------------------------------------------------------- }}}
+# {{{ Install my default packages. 
+
 sudo apt-get install -y curl dirmngr fzf gcc git make neovim npm ranger
 
-# ------------------------------------------------------------------------------
-# Configure git email and user. 
+# -------------------------------------------------------------------------- }}}
+# {{{ Configure git email and user. 
+
 git config --global user.email "$gitEmail"
 git config --global user.name "$gitName"
 
-# ------------------------------------------------------------------------------
-# MiKTeX
+# -------------------------------------------------------------------------- }}}
+# {{{ MiKTeX
+
 if [[ $miktexFlag == 1 ]]; then
 
   # Register GPG key for Ubuntu and Linux Mint.
@@ -47,29 +53,64 @@ if [[ $miktexFlag == 1 ]]; then
 
 fi 
 
-# ------------------------------------------------------------------------------
-# Force replace /etc/wsl.config
+# -------------------------------------------------------------------------- }}}
+# {{{ TexLive 
+
+if [[ $texliveFlag == 1 ]]; then
+
+  # MiKTeX
+  sudo apt-get -y update
+  sudo apt-get -y install
+                  texlive \
+                  texlive-latex-extra \
+                  texlive-publishers \
+                  texlive-science \
+                  texlive-pstricks \
+                  texlive-pictures \
+                  texlive-metapost \
+                  texlive-music
+
+  # LaTeX make
+  sudo apt-get -y install latexmk
+
+fi 
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Force replace /etc/wsl.config
+
 [[ wslFlag == 1 ]] \
   && [[ -f wsl.config ]] \
   && sudo mv -fv wsl.config /etc/wsl.conf \
   && echo "/etc/wsl.config replaced."
 
-# ------------------------------------------------------------------------------
-# Force replace /etc/hosts 
+# -------------------------------------------------------------------------- }}}
+# {{{ Force replace /etc/hosts 
+
 [[ hostsFlag == 1 ]] \
   && [[ -f hosts ]] \
   && sudo mv -fv hosts /etc/hosts \
   && echo "/etc/hosts replaced."
 
-# ------------------------------------------------------------------------------
-# Install rbenv
+# -------------------------------------------------------------------------- }}}
+# {{{ Install rbenv
+
 if [[ $rbenvFlag == 1 ]]; then
 
   # Install rbenv dependencies. 
   sudo apt-get -y update
-  sudo apt-get -y install autoconf bison build-essential libffi-dev \
-    libgdbm-dev libncurses5-dev libreadline-dev libreadline-dev libssl-dev \
-    libssl-dev libyaml-dev zlib1g-dev
+  sudo apt-get -y install \
+                  autoconf \
+                  bison \
+                  build-essential \
+                  libffi-dev \
+                  libgdbm-dev \
+                  libncurses5-dev \
+                  libreadline-dev \
+                  libreadline-dev \
+                  libssl-dev \
+                  libssl-dev \
+                  libyaml-dev \
+                  zlib1g-dev
 
   # Install rbenv.
   url='https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer'
@@ -88,7 +129,9 @@ if [[ $rbenvFlag == 1 ]]; then
     && echo ".bashrc updated."
 fi
 
-# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------------- }}}
+# {{{ xWindows Suppport
+#
 # Note: Use PowerShell with Administrator rights.  I use VcXsrv to support
 # X-windows clients when needed.  I use choco to install packages on Windows.
 # The powershell command is listed for reference only.
@@ -98,3 +141,5 @@ fi
 [[ $xWindowsFlag == 1 ]] \
   && sudo sudo apt-get install -y vim-gtk xsel \
   && echo "X Windows support installed."
+
+# -------------------------------------------------------------------------- }}}
