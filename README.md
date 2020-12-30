@@ -33,6 +33,7 @@ hostsFlag    | Caution this will force replace /etc/hosts
 miktexFlag   | Install MiKTeX when true.
 miktexGpgKey | Debian or Ubuntu key needed to access MiKTeX download.
 miktexSource | Source options needed to download MiKTeX.
+profileFlag  | Create default .profile to source .bashrc 
 rbenvFlag    | RBENV is installed when true.
 rubyVersion  | Ruby version to install with RBENV.
 ubuntuFlag   | Special handling for Ubutun & Ruby when true.

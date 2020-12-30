@@ -29,6 +29,11 @@ git config --global user.email "$gitEmail"
 git config --global user.name "$gitName"
 
 # -------------------------------------------------------------------------- }}}
+# {{{ Initialize .profile 
+
+cp -v .profile $HOME/.
+
+# -------------------------------------------------------------------------- }}}
 # {{{ MiKTeX
 
 if [[ $miktexFlag == 1 ]]; then
