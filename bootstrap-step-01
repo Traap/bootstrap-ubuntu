@@ -106,22 +106,19 @@ if [[ $rbenvFlag == 1 ]]; then
 
   # Install rbenv dependencies. 
   sudo apt-get -y update
-  # sudo apt-get -y install \
-  #                 autoconf \
-  #                 bison \
-  #                 build-essential \
-  #                 libffi-dev \
-  #                 libgdbm-dev \
-  #                 libncurses5-dev \
-  #                 libreadline-dev \
-  #                 libreadline-dev \
-  #                 libssl-dev \
-  #                 libssl-dev \
-  #                 libyaml-dev \
-  #                 zlib1g-dev
-
   sudo apt-get -y install \
-                  rbenv 
+                  autoconf \
+                  bison \
+                  build-essential \
+                  libffi-dev \
+                  libgdbm-dev \
+                  libncurses5-dev \
+                  libreadline-dev \
+                  libssl-dev \
+                  libyaml-dev \
+                  rbenv \ 
+                  zlib1g-dev
+
   # Install rbenv.
   # url='https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer'
   # curl -sL $url | bash -
