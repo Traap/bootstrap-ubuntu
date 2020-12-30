@@ -24,12 +24,14 @@ Flags are set to 1 or 0, true or false, respectively.
 flag | purpose
 ---- | ----
 bashrcFlag   | RBENV information is written to .bashrca when true.
+bundlerFlag  | Set Ruby version and install bundler. 
+cloneRoot    | Root to clone emend and emend-computer into. 
 emendFlag    | Install and build gem emend when true.
 gitEmail     | Your git email address ... Not mine :)
 gitName      | Your git name ... Not mine :)
-gpgKey       | Debian or Ubuntu key needed to access MiKTeX download.
 hostsFlag    | Caution this will force replace /etc/hosts
 miktexFlag   | Install MiKTeX when true.
+miktexGpgKey | Debian or Ubuntu key needed to access MiKTeX download.
 miktexSource | Source options needed to download MiKTeX.
 rbenvFlag    | RBENV is installed when true.
 rubyVersion  | Ruby version to install with RBENV.
@@ -39,7 +41,7 @@ xWindowsFlag | Install X windows components when true.
 
 ## Step 1
 All coponents that can be installed without needing to restart a shell.
-``` bashj
+``` bash
 ./bootstrap-step-01
 ```
 
