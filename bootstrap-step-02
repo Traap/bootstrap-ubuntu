@@ -11,7 +11,7 @@
 [[ -f config ]] && source config || (echo "config not found." && exit)
 
 # -------------------------------------------------------------------------- }}}
-# Set Ruby version and install bundler. 
+# {{{ Set Ruby version and install bundler. 
 
 if [[ $bundlerFlag == 1 ]]; then
 
