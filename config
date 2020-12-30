@@ -19,15 +19,15 @@ emendFlag=1
 gitEmail="gary.a.howard@mac.com"
 gitName="Traap"
 gpgKey='D6BC243565B2087BC3F897C9277A7293F59E4889'
-hostsFlag=0
-miktexFlag=0
+hostsFlag=1
+miktexFlag=1
 miktexSource='ubuntu focal universe'
 profilercFlag=1
 rbenvFlag=1
 rubyVersion='2.7.1'
 texliveFlag=1
 ubuntuFlag=1
-wslFlag=0
+wslFlag=1
 xWindowsFlag=1
 
 # -------------------------------------------------------------------------- }}}
