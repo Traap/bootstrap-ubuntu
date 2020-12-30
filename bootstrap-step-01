@@ -116,12 +116,11 @@ if [[ $rbenvFlag == 1 ]]; then
                   libreadline-dev \
                   libssl-dev \
                   libyaml-dev \
-                  rbenv \ 
                   zlib1g-dev
 
   # Install rbenv.
-  # url='https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer'
-  # curl -sL $url | bash -
+  url='https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer'
+  curl -sL $url | bash -
 
   # Note: Ubuntu needs another ruby step.
   [[ $ubuntuFlag == 1 ]]  \
