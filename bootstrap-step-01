@@ -132,21 +132,21 @@ if [[ $rbenvFlag == 1 ]]; then
     git clone https://github.com/rbenv/rbenv.git \
         $HOME/.rbenv
 
-    echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
-
-    exec $SHELL
-
     echo "RbEnv installed."
 
     git clone https://github.com/rbenv/ruby-build.git \
         $HOME/.rbenv/plugins/ruby-build
 
+    echo "ruby-build installed."
+
+    echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
+
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' \
          >> $HOME/.bashrc
+             >>
+    echo ".bashrc updated."
 
     exec $SHELL
-
-    echo "ruby-build installed."
 
   fi
 
