@@ -117,29 +117,31 @@ if [[ $rbenvFlag == 1 ]]; then
                   autoconf \
                   bison \
                   build-essential \
-                  libffi-dev \
+                  curl \
+                  git \
                   libgdbm-dev \
-                  libncurses5-dev \
+                  libncurses5-devlibffi-dev \
+                  libreadline-dev \
                   libreadline-dev \
                   libssl-dev \
                   libyaml-dev \
                   zlib1g-dev
 
-  # Install rbenv.
-  url='https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer'
-  curl -sL $url | bash -
-
   # Note: Ubuntu needs another ruby step.
   [[ $ubuntuFlag == 1 ]]  \
-    && sudo apt-get -y install ruby-rspec-core \
-    && echo "ruby-rspec-core installed."
+    && git clone https://github.com/rbenv/rbenv.git \
+           $HOME/.rbenv \
+    && echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc \
+    && exec $SHELL \ 
+    && echo "RbEnv rspec-core installed."
 
   # Add RBENV to your .bashrc
   [[ $bashrcFlag == 1 ]] \
-    && echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc \
-    && echo 'eval "$(rbenv init -)"' >> ~/.bashrc \
-    && source ~/.bashrc \
-    && echo ".bashrc updated."
+    && git clone https://github.com/rbenv/ruby-build.git \
+           $HOME/.rbenv/plugins/ruby-build \
+    && echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc \
+    && exec $SHELL \
+    && echo "RbEnv added to .bashrc."
 fi
 
 # -------------------------------------------------------------------------- }}}
