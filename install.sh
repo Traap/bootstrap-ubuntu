@@ -148,7 +148,7 @@ if [[ $rbenvFlag == 1 ]]; then
   # Activate rbenv
   export PATH=$HOME/.rbenv/bin:$PATH
 
-  eval "$(rbenv init -)"' >> $HOME/.bashrc
+  eval "$(rbenv init -)"
 
   rbenv init
   rbenv install $rubyVersion
@@ -197,6 +197,7 @@ if [[ $emendFlag == 1 ]]; then
   # Personalize Traap's environment.
   # Note:  Only linux commands are ran when run from a wsl distro.
   emend --verbose --nodryrun --bundle debian
+
 fi
 
 # -------------------------------------------------------------------------- }}}
