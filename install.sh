@@ -126,28 +126,39 @@ if [[ $rbenvFlag == 1 ]]; then
                   libreadline-dev \
                   libssl-dev \
                   libyaml-dev \
+                  ruby-bundler \
                   zlib1g-dev
 
-  if [[ $ubuntuFlag == 1 ]]; then
-    git clone https://github.com/rbenv/rbenv.git \
-        $HOME/.rbenv
+  git clone https://github.com/rbenv/rbenv.git \
+      $HOME/.rbenv
 
-    echo "RbEnv installed."
+  echo "RbEnv installed."
 
-    git clone https://github.com/rbenv/ruby-build.git \
-        $HOME/.rbenv/plugins/ruby-build
+  git clone https://github.com/rbenv/ruby-build.git \
+      $HOME/.rbenv/plugins/ruby-build
 
-    echo "ruby-build installed."
+  echo "ruby-build installed."
 
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc
- 
-    echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc
 
-    echo ".bashrc updated."
+  echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
 
-    exec $SHELL
+  echo ".bashrc updated."
 
-  fi
+  # Activate rbenv
+  export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc
+
+  eval "$(rbenv init -)"' >> $HOME/.bashrc
+
+  rbenv init
+  rbenv install $rubyVersion
+  rbenv global $rubyVersion
+
+  # Install Ruby Gems 
+  gem install \
+      bundler \
+      rake \
+      rspec
 
 fi
 
@@ -164,24 +175,6 @@ fi
 [[ $xWindowsFlag == 1 ]] \
   && sudo sudo apt-get install -y vim-gtk xsel \
   && echo "X Windows support installed."
-
-# -------------------------------------------------------------------------- }}}
-# {{{ Set Ruby version and install bundler.
-
-if [[ $rbenvFlag == 1 ]]; then
-
-  rbenv init
-  rbenv install $rubyVersion
-  rbenv global $rubyVersion
-
-  # Install Ruby bundler
-  sudo apt-get -y install ruby-bundler
-  gem install \
-      bundler \
-      rake \
-      rspec
-
-fi
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Clone and build emend, when needed.
