@@ -8,7 +8,10 @@
 # -------------------------------------------------------------------------- }}}
 # {{{ Source configuraiton options.
 
-[[ -f config ]] && sudo source config || (echo "config not found." && exit)
+[[ -f config ]] \
+  && sudo cat config \
+  && source config \
+  || (echo "config not found." && exit)
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Update OS
