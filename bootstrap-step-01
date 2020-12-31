@@ -127,21 +127,28 @@ if [[ $rbenvFlag == 1 ]]; then
                   libyaml-dev \
                   zlib1g-dev
 
-  # Note: Ubuntu needs another ruby step.
-  [[ $ubuntuFlag == 1 ]]  \
-    && git clone https://github.com/rbenv/rbenv.git \
-           $HOME/.rbenv \
-    && echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc \
-    && exec $SHELL \ 
-    && echo "RbEnv rspec-core installed."
+  if [[ $ubuntuFlag == 1 ]]; then
+    git clone https://github.com/rbenv/rbenv.git \
+        $HOME/.rbenv
 
-  # Add RBENV to your .bashrc
-  [[ $bashrcFlag == 1 ]] \
-    && git clone https://github.com/rbenv/ruby-build.git \
-           $HOME/.rbenv/plugins/ruby-build \
-    && echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc \
-    && exec $SHELL \
-    && echo "RbEnv added to .bashrc."
+    echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
+
+    exec $SHELL
+
+    echo "RbEnv installed."
+
+    git clone https://github.com/rbenv/ruby-build.git \
+        $HOME/.rbenv/plugins/ruby-build
+
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' \
+         >> $HOME/.bashrc
+
+    exec $SHELL
+
+    echo "ruby-build installed."
+
+  fi
+
 fi
 
 # -------------------------------------------------------------------------- }}}
