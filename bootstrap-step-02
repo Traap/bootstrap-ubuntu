@@ -21,7 +21,9 @@ if [[ $bundlerFlag == 1 ]]; then
 
   # Install Ruby bundler
   sudo apt-get -y install ruby-bundler
-  gem install bundler
+  gem install \\
+      bundler \\
+      rake
 
 fi
 
