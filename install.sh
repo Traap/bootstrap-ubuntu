@@ -162,7 +162,7 @@ if [[ $rbenvFlag == 1 ]]; then
 
   eval "$(rbenv init -)"
 
-  source $HOME/.bashrc
+  exec $SHELL 
 
   rbenv init
   rbenv install $rubyVersion
