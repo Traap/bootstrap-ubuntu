@@ -120,7 +120,8 @@ if [[ $rbenvFlag == 1 ]]; then
                   curl \
                   git \
                   libgdbm-dev \
-                  libncurses5-devlibffi-dev \
+                  libncurses5-dev \
+                  libffi-dev \
                   libreadline-dev \
                   libreadline-dev \
                   libssl-dev \
