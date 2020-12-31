@@ -139,11 +139,10 @@ if [[ $rbenvFlag == 1 ]]; then
 
     echo "ruby-build installed."
 
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc
+ 
     echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
 
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' \
-         >> $HOME/.bashrc
- 
     echo ".bashrc updated."
 
     exec $SHELL
