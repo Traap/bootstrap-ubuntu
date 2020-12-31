@@ -6,14 +6,6 @@
 #   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Source configuraiton options.
-
-[[ -f config ]] \
-  && sudo cat config \
-  && source config \
-  || (echo "config not found." && exit)
-
-# -------------------------------------------------------------------------- }}}
 # {{{ Set Ruby version and install bundler.
 
 if [[ $rbenvFlag == 1 ]]; then
