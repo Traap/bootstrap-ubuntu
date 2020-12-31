@@ -21,20 +21,24 @@ sudo apt-get -y upgrade
 sudo apt-get -y autoremove
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Install my default packages. 
+# {{{ Install my default packages.
 
 sudo apt-get install -y curl dirmngr fzf gcc git make neovim npm ranger
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Configure git email and user. 
+# {{{ Configure git email and user.
 
 git config --global user.email "$gitEmail"
 git config --global user.name "$gitName"
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Initialize .profile 
+# {{{ Initialize .profile
 
-cp -v .profile $HOME/.
+if [[ $profileFlag == 1 ]]; then
+
+  cp -v .profile $HOME/.
+
+fi
 
 # -------------------------------------------------------------------------- }}}
 # {{{ MiKTeX
@@ -59,10 +63,10 @@ if [[ $miktexFlag == 1 ]]; then
   # LaTeX make
   sudo apt-get -y install latexmk
 
-fi 
+fi
 
 # -------------------------------------------------------------------------- }}}
-# {{{ TexLive 
+# {{{ TexLive
 
 if [[ $texliveFlag == 1 ]]; then
 
@@ -84,7 +88,7 @@ if [[ $texliveFlag == 1 ]]; then
   # LaTeX make
   sudo apt-get -y install latexmk
 
-fi 
+fi
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Force replace /etc/wsl.config
@@ -95,7 +99,7 @@ fi
   && echo "/etc/wsl.config replaced."
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Force replace /etc/hosts 
+# {{{ Force replace /etc/hosts
 
 [[ hostsFlag == 1 ]] \
   && [[ -f hosts ]] \
@@ -107,7 +111,7 @@ fi
 
 if [[ $rbenvFlag == 1 ]]; then
 
-  # Install rbenv dependencies. 
+  # Install rbenv dependencies.
   sudo apt-get -y update
   sudo apt-get -y install \
                   autoconf \
@@ -145,8 +149,9 @@ fi
 # X-windows clients when needed.  I use choco to install packages on Windows.
 # The powershell command is listed for reference only.
 # choco install -y vcxsr
-# 
-# X Windos support. 
+#
+# X Windos support.
+
 [[ $xWindowsFlag == 1 ]] \
   && sudo sudo apt-get install -y vim-gtk xsel \
   && echo "X Windows support installed."

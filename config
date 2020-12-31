@@ -13,7 +13,6 @@
 #   2) Options are listed alphabetically only because I scan them faster.
 
 bashrcFlag=1
-bundlerFlag=1  
 cloneRoot=$HOME/git
 emendFlag=1  
 gitEmail="gary.a.howard@mac.com"

@@ -14,13 +14,13 @@
   || (echo "config not found." && exit)
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Set Ruby version and install bundler. 
+# {{{ Set Ruby version and install bundler.
 
-if [[ $bundlerFlag == 1 ]]; then
+if [[ $rbenvFlag == 1 ]]; then
 
   rbenv init
-  rbenv install $rubyVersion 
-  rbenv global $rubyVersion 
+  rbenv install $rubyVersion
+  rbenv global $rubyVersion
 
   # Install Ruby bundler
   sudo apt-get -y install ruby-bundler
@@ -34,20 +34,20 @@ fi
 # {{{ Clone and build emend, when needed.
 
 if [[ $emendFlag == 1 ]]; then
-  mkdir -p $cloneRoot 
-  cd $cloneRoot 
+  mkdir -p $cloneRoot
+  cd $cloneRoot
   git clone http://github.com/Traap/emend.git
   cd emend
   rake build:emend
-  
+
   # Rspec doc
   rspec --format documentation
-  
-  # Clone and emend this system. 
+
+  # Clone and emend this system.
   cd ..
   git clone http://github.com/Traap/emend-computer.git
   cd emend-computer
-  
+
   # Personalize Traap's environment.
   # Note:  Only linux commands are ran when run from a wsl distro.
   emend --verbose --nodryrun --bundle debian

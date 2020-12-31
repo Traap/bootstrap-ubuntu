@@ -24,7 +24,6 @@ Flags are set to 1 or 0, true or false, respectively.
 flag | purpose
 ---- | ----
 bashrcFlag   | RBENV information is written to .bashrca when true.
-bundlerFlag  | Set Ruby version and install bundler. 
 cloneRoot    | Root to clone emend and emend-computer into. 
 emendFlag    | Install and build gem emend when true.
 gitEmail     | Your git email address ... Not mine :)
