@@ -26,7 +26,8 @@ if [[ $rbenvFlag == 1 ]]; then
   sudo apt-get -y install ruby-bundler
   gem install \
       bundler \
-      rake
+      rake \
+      rspec
 
 fi
 
