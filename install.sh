@@ -146,7 +146,7 @@ if [[ $rbenvFlag == 1 ]]; then
   echo ".bashrc updated."
 
   # Activate rbenv
-  export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc
+  export PATH=$HOME/.rbenv/bin:$PATH
 
   eval "$(rbenv init -)"' >> $HOME/.bashrc
 
