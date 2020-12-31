@@ -8,7 +8,7 @@
 # -------------------------------------------------------------------------- }}}
 # {{{ Source configuraiton options.
 
-[[ -f config ]] && source config || (echo "config not found." && exit)
+[[ -f config ]] && sudo source config || (echo "config not found." && exit)
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Set Ruby version and install bundler. 
@@ -21,8 +21,8 @@ if [[ $bundlerFlag == 1 ]]; then
 
   # Install Ruby bundler
   sudo apt-get -y install ruby-bundler
-  gem install \\
-      bundler \\
+  gem install \
+      bundler \
       rake
 
 fi
