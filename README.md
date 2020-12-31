@@ -39,14 +39,9 @@ ubuntuFlag   | Special handling for Ubutun & Ruby when true.
 wslFlag      | Caution this will force replace /etc/wsl.config.
 xWindowsFlag | Install X windows components when true.
 
-## Step 1
+## Step 
 All coponents that can be installed without needing to restart a shell.
 ``` bash
-./bootstrap-step-01
+./install.sh
 ```
 
-## Step 2
-All components that require the shell to be restarted.
-``` bash
-./bootstrap-step-02
-```
