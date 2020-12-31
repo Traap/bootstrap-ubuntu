@@ -23,13 +23,25 @@ sudo apt-get -y autoremove
 # -------------------------------------------------------------------------- }}}
 # {{{ Install my default packages.
 
-sudo apt-get install -y curl dirmngr fzf gcc git make neovim npm ranger
+sudo apt-get install -y \
+             curl \
+             dirmngr \
+             fzf \
+             gcc \
+             git \
+             make \
+             neovim \
+             npm \
+             ranger
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Configure git email and user.
 
 git config --global user.email "$gitEmail"
 git config --global user.name "$gitName"
+git config --global credential.helper cache 
+git config --global credential.helper 'cache --timeout=32000'
+git config --global core.editor vim 
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Initialize .profile
@@ -149,6 +161,8 @@ if [[ $rbenvFlag == 1 ]]; then
   export PATH=$HOME/.rbenv/bin:$PATH
 
   eval "$(rbenv init -)"
+
+  source $HOME/.bashrc
 
   rbenv init
   rbenv install $rubyVersion
