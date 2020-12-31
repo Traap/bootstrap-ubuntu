@@ -162,7 +162,7 @@ if [[ $rbenvFlag == 1 ]]; then
 
   eval "$(rbenv init -)"
 
-  exec $SHELL 
+  source $HOME/.bashrc
 
   rbenv init
   rbenv install $rubyVersion
@@ -206,10 +206,13 @@ if [[ $emendFlag == 1 ]]; then
   # Clone and emend this system.
   cd ..
   git clone http://github.com/Traap/emend-computer.git
-  cd emend-computer
+
+  # Resouce .bashrc 
+  source $HOME/.bashrc
 
   # Personalize Traap's environment.
   # Note:  Only linux commands are ran when run from a wsl distro.
+  cd emend-computer
   emend --verbose --nodryrun --bundle debian
 
 fi
