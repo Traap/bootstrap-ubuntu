@@ -246,7 +246,7 @@ installRuby() {
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Install Ruby Gems
-k
+
 installRubyGems() {
   if [[ $rbenvFlag == 1 ]]; then
 
@@ -303,7 +303,7 @@ personalizeOS() {
 }
 
 # -------------------------------------------------------------------------- }}}
-{{{ Kick start this script.
+# {{{ Kick start this script.
 
 main "$@"
 
