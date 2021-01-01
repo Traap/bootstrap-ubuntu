@@ -202,18 +202,15 @@ if [[ $emendFlag == 1 ]]; then
   git clone http://github.com/Traap/emend.git
   cd emend
 
-  # Rspec doc
-  rspec --format documentation
-
   # Build and install emend
   rake build:emend
-
-  # Refresh bash shell."
-  source $HOME/.bashrc 
 
   # Clone and emend this system.
   cd ..
   git clone http://github.com/Traap/emend-computer.git
+
+  # Refresh bash shell."
+  source $HOME/.bashrc 
 
   # Personalize Traap's environment.
   # Note:  Only linux commands are ran when run from a wsl distro.
