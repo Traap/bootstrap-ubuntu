@@ -198,7 +198,6 @@ fi
 
 [[ $emendFlag == 1 ]] \
   && ./personalize-debian.sh \
-  && echo "Personalization of debian.:
-fi
+  && echo "Personalization of debian."
 
 # -------------------------------------------------------------------------- }}}
