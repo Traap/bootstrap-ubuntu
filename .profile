@@ -1,2 +1,2 @@
-[[ -f .bashrc ]] && source .bashrc || (echo ".bashrc not found." && exit)
+[[ ! -f .bashrc ]] && echo ".bashrc not found." || source .bashrc
 
