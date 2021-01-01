@@ -198,10 +198,10 @@ fi
 
 if [[ $emendFlag == 1 ]]; then
 
-  # Run this block in a subshell.
-  ( 
-    echo "Personalization of debian.";
+  echo "Personalization of debian.";
 
+  echo "Install and build emend from a subshell."
+  ( 
     echo "Clone emend";
     mkdir -p $cloneRoot;
     cd $cloneRoot;
@@ -210,14 +210,14 @@ if [[ $emendFlag == 1 ]]; then
     echo "Build and install emend";
     cd emend;
     rake build:emend;
+  )
 
-    # Clone and emend this system.
+  echo "Emend this computer from a subshell."
+  (
     echo "Clone emend-computer";
     cd ..;
     git clone http://github.com/Traap/emend-computer.git;
 
-    # Personalize Traap's environment.
-    # Note:  Only linux commands are ran when run from a wsl distro.
     echo "Emend this computer";
     cd emend-computer;
     emend --verbose --nodryrun --bundle debian;
