@@ -1,122 +1,155 @@
 #!/bin/bash
 # {{{ Usefull URLs
-#
+
 # Useful documentation.
 #   https://miktex.org/howto/install-miktex-unx
 #   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 
 # -------------------------------------------------------------------------- }}}
+# {{{ Main function 
+
+main() {
+  loadConfig
+  updateOS
+  installDefaultPackages
+  configureGit
+  initProfile
+  installMikTeX
+  installTexLive
+  installWslConfig
+  installHosts
+  installXWindows
+  installRbEnv
+  installRubyBuild
+  updateBashRc
+  installRuby
+  installRubyGems
+  personalizeOS
+}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Source configuraiton options.
 
-[[ -f config ]] \
-  && sudo cat config \
-  && source config \
-  || (echo "config not found." && exit)
+loadConfig() {
+  [[ -f config ]] \
+    && sudo cat config \
+    && source config \
+    || (echo "config not found." && exit)
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Update OS
 
-sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y autoremove
+updateOS() {
+  sudo apt-get -y update
+  sudo apt-get -y upgrade
+  sudo apt-get -y autoremove
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Install my default packages.
 
-sudo apt-get install -y \
-             curl \
-             dirmngr \
-             fzf \
-             gcc \
-             git \
-             make \
-             neovim \
-             npm \
-             ranger
+installDefaultPackages() {
+  sudo apt-get install -y \
+              curl \
+              dirmngr \
+              fzf \
+              gcc \
+              git \
+              make \
+              neovim \
+              npm \
+              ranger
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Configure git email and user.
 
-git config --global user.email "$gitEmail"
-git config --global user.name "$gitName"
-git config --global credential.helper cache 
-git config --global credential.helper 'cache --timeout=32000'
-git config --global core.editor vim 
+configureGit() {
+  git config --global user.email "$gitEmail"
+  git config --global user.name "$gitName"
+  git config --global credential.helper cache 
+  git config --global credential.helper 'cache --timeout=32000'
+  git config --global core.editor vim 
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Initialize .profile
 
-if [[ $profileFlag == 1 ]]; then
-
-  cp -v .profile $HOME/.
-
-fi
+initProfile() {
+  if [[ $profileFlag == 1 ]]; then
+    cp -v .profile $HOME/.
+  fi
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ MiKTeX
 
-if [[ $miktexFlag == 1 ]]; then
+installMikTeX() {
+  if [[ $miktexFlag == 1 ]]; then
 
-  # Register GPG key for Ubuntu and Linux Mint.
-  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys $miktexGpgKey
+    # Register GPG key for Ubuntu and Linux Mint.
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys $miktexGpgKey
 
-  # Installation source: Ubuntu 18.04, Linux Mint 19.
-  echo "deb http://miktex.org/download/${miktexSource}" \
-    | sudo tee /etc/apt/sources.list.d/miktex.list
+    # Installation source: Ubuntu 18.04, Linux Mint 19.
+    echo "deb http://miktex.org/download/${miktexSource}" \
+      | sudo tee /etc/apt/sources.list.d/miktex.list
 
-  # MiKTeX
-  sudo apt-get -y update
-  sudo apt-get -y install miktex
+    # MiKTeX
+    sudo apt-get -y install \
+                    miktex \
+                    latexmk
 
-  # Finish MikTeX shared installation setup.
-  sudo miktexsetup --shared=yes finish
-  sudo initexmf --admin --set-config-value [MPM]AutoInstall=1
+    # Finish MikTeX shared installation setup.
+    sudo miktexsetup --shared=yes finish
+    sudo initexmf --admin --set-config-value [MPM]AutoInstall=1
 
-  # LaTeX make
-  sudo apt-get -y install latexmk
-
-fi
+  fi
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ TexLive
 
-if [[ $texliveFlag == 1 ]]; then
+installTexLive() {
+  if [[ $texliveFlag == 1 ]]; then
 
-  # MiKTeX
-  sudo apt-get -y update
-  sudo apt-get -y install
-                  texlive \
-                  texlive-latex-extra \
-                  texlive-publishers \
-                  texlive-science \
-                  texlive-pstricks \
-                  texlive-pictures \
-                  texlive-metapost \
-                  texlive-music
+    # TexLive compnents 
+    sudo apt-get -y install
+                    texlive \
+                    texlive-latex-extra \
+                    texlive-publishers \
+                    texlive-science \
+                    texlive-pstricks \
+                    texlive-pictures \
+                    texlive-metapost \
+                    texlive-music \
+                    latexmk
 
-  # Create ls-R databases
-  sudo mktexlsr
+    # Create ls-R databases
+    sudo mktexlsr
 
-  # LaTeX make
-  sudo apt-get -y install latexmk
-
-fi
+  fi
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Force replace /etc/wsl.config
 
-[[ wslFlag == 1 ]] \
-  && [[ -f wsl.config ]] \
-  && sudo mv -fv wsl.config /etc/wsl.conf \
-  && echo "/etc/wsl.config replaced."
+installWslConfig() {
+  [[ wslFlag == 1 ]] \
+    && [[ -f wsl.config ]] \
+    && sudo mv -fv wsl.config /etc/wsl.conf \
+    && echo "/etc/wsl.config replaced."
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Force replace /etc/hosts
 
-[[ hostsFlag == 1 ]] \
-  && [[ -f hosts ]] \
-  && sudo mv -fv hosts /etc/hosts \
-  && echo "/etc/hosts replaced."
+installHosts() {
+  [[ hostsFlag == 1 ]] \
+    && [[ -f hosts ]] \
+    && sudo mv -fv hosts /etc/hosts \
+    && echo "/etc/hosts replaced."
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ xWindows Suppport
@@ -128,109 +161,150 @@ fi
 #
 # X Windos support.
 
-[[ $xWindowsFlag == 1 ]] \
-  && sudo sudo apt-get install -y vim-gtk xsel \
-  && echo "X Windows support installed."
+installXWindows() {
+  [[ $xWindowsFlag == 1 ]] \
+    && sudo sudo apt-get install -y vim-gtk xsel \
+    && echo "X Windows support installed."
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Install rbenv
 
-if [[ $rbenvFlag == 1 ]]; then
+installRbEnv() {
+  if [[ $rbenvFlag == 1 ]]; then
 
-  # Install rbenv dependencies.
-  sudo apt-get -y update
-  sudo apt-get -y install \
-                  autoconf \
-                  bison \
-                  build-essential \
-                  curl \
-                  git \
-                  libgdbm-dev \
-                  libncurses5-dev \
-                  libffi-dev \
-                  libreadline-dev \
-                  libreadline-dev \
-                  libssl-dev \
-                  libyaml-dev \
-                  ruby-bundler \
-                  zlib1g-dev
+    # Install rbenv dependencies.
+    sudo apt-get -y install \
+                    autoconf \
+                    bison \
+                    build-essential \
+                    curl \
+                    git \
+                    libgdbm-dev \
+                    libncurses5-dev \
+                    libffi-dev \
+                    libreadline-dev \
+                    libreadline-dev \
+                    libssl-dev \
+                    libyaml-dev \
+                    ruby-bundler \
+                    zlib1g-dev
 
-  git clone https://github.com/rbenv/rbenv.git \
-      $HOME/.rbenv
+    git clone https://github.com/rbenv/rbenv.git $HOME/.rbenv
 
-  echo "RbEnv installed."
+    echo "RbEnv installed."
 
-  git clone https://github.com/rbenv/ruby-build.git \
-      $HOME/.rbenv/plugins/ruby-build
+  fi
+}
 
-  echo "ruby-build installed."
+# -------------------------------------------------------------------------- }}}
+# {{{ Install Ruby Build 
 
-  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc
+installRubyBuild() {
+  if [[ $rbenvFlag == 1 ]]; then
 
-  echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
+    git clone https://github.com/rbenv/ruby-build.git \
+        $HOME/.rbenv/plugins/ruby-build
 
-  echo ".bashrc updated."
+    echo "ruby-build installed."
 
-  # Update path, rbenv, and shell
-  export PATH=$HOME/.rbenv/bin:$PATH
+  fi
+}
 
-  eval "$(rbenv init -)"
+# -------------------------------------------------------------------------- }}}
+# {{{ Update .bashrc
 
-  source $HOME/.bashrc 
+updateBashRc() {
+  if [[ $rbenvFlag == 1 ]]; then
 
-  echo "Path and rbenv loaded with new shell."
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc
+    echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
+    echo ".bashrc updated."
 
-  rbenv init
-  rbenv install $rubyVersion
-  rbenv global $rubyVersion
+    # Update path, rbenv, and shell
+    export PATH=$HOME/.rbenv/bin:$PATH
+    eval "$(rbenv init -)"
+    source $HOME/.bashrc 
+    echo "Path and rbenv loaded with new shell."
 
-  # Install Ruby Gems 
-  gem install \
-      bundler \
-      rake \
-      rspec
+  fi
+}
 
-  echo "Ruby Gems installed."
-fi
+# -------------------------------------------------------------------------- }}}
+# {{{ Install Ruby
+
+installRuby() {
+  if [[ $rbenvFlag == 1 ]]; then
+
+    rbenv init
+    rbenv install $rubyVersion
+    rbenv global $rubyVersion
+
+    echo "Ruby installed."
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install Ruby Gems
+k
+installRubyGems() {
+  if [[ $rbenvFlag == 1 ]]; then
+
+    # Install Ruby Gems 
+    gem install \
+        bundler \
+        rake \
+        rspec
+
+    echo "Ruby Gems installed."
+  fi
+}
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Personalize debian 
 
-if [[ $emendFlag == 1 ]]; then
+personalizeOS() {
+  if [[ $emendFlag == 1 ]]; then
 
-  echo "Personalization of debian.";
+    echo "Personalization of debian.";
 
-  echo "Install and build emend from a subshell."
-  ( 
-    echo "PATH and rbenv must be known."
-    export PATH=$HOME/.rbenv/bin:$PATH
-    eval "$(rbenv init -)"
+    echo "Install and build emend from a subshell."
+    ( 
+      echo "PATH and rbenv must be known."
+      export PATH=$HOME/.rbenv/bin:$PATH
+      eval "$(rbenv init -)"
 
-    echo "Clone emend";
-    mkdir -p $cloneRoot;
-    cd $cloneRoot;
-    git clone http://github.com/Traap/emend.git;
+      echo "Clone emend";
+      mkdir -p $cloneRoot;
+      cd $cloneRoot;
+      git clone http://github.com/Traap/emend.git;
 
-    echo "Build and install emend";
-    cd emend;
-    rake build:emend;
-  )
+      echo "Build and install emend";
+      cd emend;
+      rake build:emend;
+    )
 
-  echo "Emend this computer from a subshell."
-  (
-    echo "PATH and rbenv must be known."
-    export PATH=$HOME/.rbenv/bin:$PATH
-    eval "$(rbenv init -)"
+    echo "Emend this computer from a subshell."
+    (
+      echo "PATH and rbenv must be known."
+      export PATH=$HOME/.rbenv/bin:$PATH
+      eval "$(rbenv init -)"
 
-    echo "Clone emend-computer";
-    cd $cloneRoot;
-    git clone http://github.com/Traap/emend-computer.git;
+      echo "Clone emend-computer";
+      cd $cloneRoot;
+      git clone http://github.com/Traap/emend-computer.git;
 
-    echo "Emend this computer";
-    cd emend-computer;
-    emend --verbose --nodryrun --bundle debian;
-  )
+      echo "Emend this computer";
+      cd emend-computer;
+      emend --verbose --nodryrun --bundle debian;
+    )
 
-fi
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+{{{ Kick start this script.
+
+main "$@"
 
 # -------------------------------------------------------------------------- }}}
