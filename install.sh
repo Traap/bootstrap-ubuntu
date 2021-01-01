@@ -215,7 +215,7 @@ if [[ $emendFlag == 1 ]]; then
   echo "Emend this computer from a subshell."
   (
     echo "Clone emend-computer";
-    cd ..;
+    cd $cloneRoot;
     git clone http://github.com/Traap/emend-computer.git;
 
     echo "Emend this computer";
