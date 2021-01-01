@@ -196,8 +196,34 @@ fi
 # -------------------------------------------------------------------------- }}}
 # {{{ Personalize debian 
 
-[[ $emendFlag == 1 ]] \
-  && ./personalize-debian.sh \
-  && echo "Personalization of debian."
+if [[ $emendFlag == 1 ]]; then
 
+  # Run this block in a subshell.
+  ( 
+    echo "Personalization of debian.";
+
+    echo "Clone emend";
+    mkdir -p $cloneRoot;
+    cd $cloneRoot;
+    git clone http://github.com/Traap/emend.git;
+
+    echo "Build and install emend";
+    cd emend;
+    rake build:emend;
+
+    # Clone and emend this system.
+    echo "Clone emend-computer";
+    cd ..;
+    git clone http://github.com/Traap/emend-computer.git;
+
+    # Personalize Traap's environment.
+    # Note:  Only linux commands are ran when run from a wsl distro.
+    echo "Emend this computer";
+    cd emend-computer;
+    emend --verbose --nodryrun --bundle debian;
+  )
+
+fi
+
+# -------------------------------------------------------------------------- }}}
 # -------------------------------------------------------------------------- }}}
