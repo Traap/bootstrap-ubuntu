@@ -119,6 +119,20 @@ fi
   && echo "/etc/hosts replaced."
 
 # -------------------------------------------------------------------------- }}}
+# {{{ xWindows Suppport
+#
+# Note: Use PowerShell with Administrator rights.  I use VcXsrv to support
+# X-windows clients when needed.  I use choco to install packages on Windows.
+# The powershell command is listed for reference only.
+# choco install -y vcxsr
+#
+# X Windos support.
+
+[[ $xWindowsFlag == 1 ]] \
+  && sudo sudo apt-get install -y vim-gtk xsel \
+  && echo "X Windows support installed."
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Install rbenv
 
 if [[ $rbenvFlag == 1 ]]; then
@@ -162,7 +176,7 @@ if [[ $rbenvFlag == 1 ]]; then
 
   eval "$(rbenv init -)"
 
-  exec bash
+  source $HOME/.bashrc 
 
   echo "Path and rbenv loaded with new shell."
 
@@ -180,20 +194,6 @@ if [[ $rbenvFlag == 1 ]]; then
 fi
 
 # -------------------------------------------------------------------------- }}}
-# {{{ xWindows Suppport
-#
-# Note: Use PowerShell with Administrator rights.  I use VcXsrv to support
-# X-windows clients when needed.  I use choco to install packages on Windows.
-# The powershell command is listed for reference only.
-# choco install -y vcxsr
-#
-# X Windos support.
-
-[[ $xWindowsFlag == 1 ]] \
-  && sudo sudo apt-get install -y vim-gtk xsel \
-  && echo "X Windows support installed."
-
-# -------------------------------------------------------------------------- }}}
 # {{{ Clone and build emend, when needed.
 
 if [[ $emendFlag == 1 ]]; then
@@ -209,7 +209,7 @@ if [[ $emendFlag == 1 ]]; then
   rake build:emend
 
   # Refresh bash shell."
-  exec bash
+  source $HOME/.bashrc 
 
   # Clone and emend this system.
   cd ..
