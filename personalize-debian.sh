@@ -2,6 +2,11 @@
 # {{{ Clone and build emend, when needed.
 
 if [[ $emendFlag == 1 ]]; then
+
+  eval "$(rbenv init -)"
+
+  source $HOME/.bashrc 
+
   mkdir -p $cloneRoot
   cd $cloneRoot
   git clone http://github.com/Traap/emend.git
