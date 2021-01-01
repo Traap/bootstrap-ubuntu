@@ -202,6 +202,10 @@ if [[ $emendFlag == 1 ]]; then
 
   echo "Install and build emend from a subshell."
   ( 
+    echo "PATH and rbenv must be known."
+    export PATH=$HOME/.rbenv/bin:$PATH
+    eval "$(rbenv init -)"
+
     echo "Clone emend";
     mkdir -p $cloneRoot;
     cd $cloneRoot;
@@ -214,6 +218,10 @@ if [[ $emendFlag == 1 ]]; then
 
   echo "Emend this computer from a subshell."
   (
+    echo "PATH and rbenv must be known."
+    export PATH=$HOME/.rbenv/bin:$PATH
+    eval "$(rbenv init -)"
+
     echo "Clone emend-computer";
     cd $cloneRoot;
     git clone http://github.com/Traap/emend-computer.git;
@@ -225,5 +233,4 @@ if [[ $emendFlag == 1 ]]; then
 
 fi
 
-# -------------------------------------------------------------------------- }}}
 # -------------------------------------------------------------------------- }}}
