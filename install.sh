@@ -157,12 +157,14 @@ if [[ $rbenvFlag == 1 ]]; then
 
   echo ".bashrc updated."
 
-  # Activate rbenv
+  # Update path, rbenv, and shell
   export PATH=$HOME/.rbenv/bin:$PATH
 
   eval "$(rbenv init -)"
 
-  exec bash 
+  exec bash
+
+  echo "Path and rbenv loaded with new shell."
 
   rbenv init
   rbenv install $rubyVersion
@@ -174,6 +176,7 @@ if [[ $rbenvFlag == 1 ]]; then
       rake \
       rspec
 
+  echo "Ruby Gems installed."
 fi
 
 # -------------------------------------------------------------------------- }}}
@@ -198,10 +201,15 @@ if [[ $emendFlag == 1 ]]; then
   cd $cloneRoot
   git clone http://github.com/Traap/emend.git
   cd emend
-  rake build:emend
 
   # Rspec doc
   rspec --format documentation
+
+  # Build and install emend
+  rake build:emend
+
+  # Refresh bash shell."
+  exec bash
 
   # Clone and emend this system.
   cd ..
