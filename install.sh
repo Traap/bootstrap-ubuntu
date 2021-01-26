@@ -95,6 +95,9 @@ installMikTeX() {
     echo "deb http://miktex.org/download/${miktexSource}" \
       | sudo tee /etc/apt/sources.list.d/miktex.list
 
+    # Update database
+    sudo apt-get update 
+
     # MiKTeX
     sudo apt-get -y install \
                     miktex \
