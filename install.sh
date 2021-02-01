@@ -10,21 +10,21 @@
 
 main() {
   loadConfig
-  updateOS
-  installDefaultPackages
-  configureGit
-  initProfile
-  installMikTeX
-  installTexLive
+  # updateOS
+  # installDefaultPackages
+  # configureGit
+  # initProfile
+  # installMikTeX
+  # installTexLive
   installWslConfig
-  installHosts
-  installXWindows
-  installRbEnv
-  installRubyBuild
-  updateBashRc
-  installRuby
-  installRubyGems
-  personalizeOS
+  # installHosts
+  # installXWindows
+  # installRbEnv
+  # installRubyBuild
+  # updateBashRc
+  # installRuby
+  # installRubyGems
+  # personalizeOS
 }
 
 # -------------------------------------------------------------------------- }}}
@@ -138,10 +138,15 @@ installTexLive() {
 # {{{ Force replace /etc/wsl.config
 
 installWslConfig() {
-  [[ wslFlag == 1 ]] \
-    && [[ -f wsl.config ]] \
-    && sudo mv -fv wsl.config /etc/wsl.conf \
-    && echo "/etc/wsl.config replaced."
+  [[ $wslFlag == 1 ]] && echo "wslFlag: 1"
+  [[ -f wsl.conf ]]  && echo "wsl.conf found"
+  
+  
+  [[ $wslFlag == 1 ]] \
+    && [[ -f wsl.conf ]] \
+    && sudo cp -fv wsl.conf /etc/wsl.conf \
+    && echo "/etc/wsl.conf replaced." \
+    || echo "Error:  /etc/wsl.conf did not update."
 }
 
 # -------------------------------------------------------------------------- }}}
