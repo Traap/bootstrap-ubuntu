@@ -10,21 +10,21 @@
 
 main() {
   loadConfig
-  # updateOS
-  # installDefaultPackages
-  # configureGit
-  # initProfile
-  # installMikTeX
-  # installTexLive
+  updateOS
+  installDefaultPackages
+  configureGit
+  initProfile
+  installMikTeX
+  installTexLive
   installWslConfig
-  # installHosts
-  # installXWindows
-  # installRbEnv
-  # installRubyBuild
-  # updateBashRc
-  # installRuby
-  # installRubyGems
-  # personalizeOS
+  installHosts
+  installXWindows
+  installRbEnv
+  installRubyBuild
+  updateBashRc
+  installRuby
+  installRubyGems
+  personalizeOS
 }
 
 # -------------------------------------------------------------------------- }}}
@@ -138,10 +138,6 @@ installTexLive() {
 # {{{ Force replace /etc/wsl.config
 
 installWslConfig() {
-  [[ $wslFlag == 1 ]] && echo "wslFlag: 1"
-  [[ -f wsl.conf ]]  && echo "wsl.conf found"
-  
-  
   [[ $wslFlag == 1 ]] \
     && [[ -f wsl.conf ]] \
     && sudo cp -fv wsl.conf /etc/wsl.conf \
@@ -153,7 +149,7 @@ installWslConfig() {
 # {{{ Force replace /etc/hosts
 
 installHosts() {
-  [[ hostsFlag == 1 ]] \
+  [[ $hostsFlag == 1 ]] \
     && [[ -f hosts ]] \
     && sudo mv -fv hosts /etc/hosts \
     && echo "/etc/hosts replaced."
