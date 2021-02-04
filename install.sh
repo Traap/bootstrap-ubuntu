@@ -126,7 +126,7 @@ installTexLive() {
   if [[ $texliveFlag == 1 ]]; then
 
     # TexLive compnents 
-    sudo apt-get -y install
+    sudo apt-get -y install \
                     texlive \
                     texlive-latex-extra \
                     texlive-publishers \
