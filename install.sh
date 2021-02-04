@@ -24,6 +24,8 @@ main() {
   updateBashRc
   installRuby
   installRubyGems
+  installRust
+  installRustPrograms
   personalizeOS
 }
 
@@ -41,36 +43,43 @@ loadConfig() {
 # {{{ Update OS
 
 updateOS() {
-  sudo apt-get -y update
-  sudo apt-get -y upgrade
-  sudo apt-get -y autoremove
+  if [[ $osUpdateFlag == 1 ]]; then
+    sudo apt-get -y update
+    sudo apt-get -y upgrade
+    sudo apt-get -y autoremove
+  fi
 }
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Install my default packages.
 
 installDefaultPackages() {
-  sudo apt-get install -y \
-              curl \
-              dirmngr \
-              fzf \
-              gcc \
-              git \
-              make \
-              neovim \
-              npm \
-              ranger
+  if [[ $osUpdateFlag == 1 ]]; then
+    sudo apt-get install -y \
+                curl \
+                dirmngr \
+                fzf \
+                gcc \
+                git \
+                make \
+                neovim \
+                npm \
+                ranger \
+                ripgrep
+  fi
 }
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Configure git email and user.
 
 configureGit() {
-  git config --global user.email "$gitEmail"
-  git config --global user.name "$gitName"
-  git config --global credential.helper cache 
-  git config --global credential.helper 'cache --timeout=32000'
-  git config --global core.editor vim 
+  if [[ $gitconfigFlag == 1 ]]; then
+    git config --global user.email "$gitEmail"
+    git config --global user.name "$gitName"
+    git config --global credential.helper cache 
+    git config --global credential.helper 'cache --timeout=32000'
+    git config --global core.editor vim 
+  fi
 }
 
 # -------------------------------------------------------------------------- }}}
@@ -141,8 +150,7 @@ installWslConfig() {
   [[ $wslFlag == 1 ]] \
     && [[ -f wsl.conf ]] \
     && sudo cp -fv wsl.conf /etc/wsl.conf \
-    && echo "/etc/wsl.conf replaced." \
-    || echo "Error:  /etc/wsl.conf did not update."
+    && echo "/etc/wsl.conf replaced."
 }
 
 # -------------------------------------------------------------------------- }}}
@@ -151,7 +159,7 @@ installWslConfig() {
 installHosts() {
   [[ $hostsFlag == 1 ]] \
     && [[ -f hosts ]] \
-    && sudo mv -fv hosts /etc/hosts \
+    && sudo cp -fv hosts /etc/hosts \
     && echo "/etc/hosts replaced."
 }
 
@@ -261,6 +269,31 @@ installRubyGems() {
         rspec
 
     echo "Ruby Gems installed."
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install Rust 
+
+installRust() {
+  if [[ $rustFlag == 1 ]]; then
+
+    echo "Install rust from a subshell."
+    ( 
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    )
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install RustPrograms
+
+installRustPrograms() {
+  if [[ $rustProgramsFlag == 1 ]]; then
+
+    cargo install exa
+
   fi
 }
 

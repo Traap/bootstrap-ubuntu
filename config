@@ -6,27 +6,31 @@
 #   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 
 # -------------------------------------------------------------------------- }}}
-# {{ Define product version now.
+# {{{ Define product version now.
 #
 # Notes:
 #   1) 0 == false && 1 == true ... Duh!
 #   2) Options are listed alphabetically only because I scan them faster.
 
-bashrcFlag=1
+bashrcFlag=0
 cloneRoot=$HOME/git
-emendFlag=1  
+emendFlag=0  
 gitEmail="gary.a.howard@mac.com"
 gitName="Traap"
-hostsFlag=1
+gitconfigFlag="Traap"
+hostsFlag=0
 miktexFlag=0
 miktexGpgKey='D6BC243565B2087BC3F897C9277A7293F59E4889'
 miktexSource='ubuntu focal universe'
-profileFlag=1
-rbenvFlag=1
+osUpdateFlag=0
+profileFlag=0
+rbenvFlag=0
 rubyVersion='2.7.2'
+rustFlag=0
+rustProgramsFlag=0
 texliveFlag=0
-ubuntuFlag=1
-wslFlag=1
-xWindowsFlag=1
+ubuntuFlag=0
+wslFlag=0
+xWindowsFlag=0
 
 # -------------------------------------------------------------------------- }}}
