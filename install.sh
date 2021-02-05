@@ -98,7 +98,9 @@ installMikTeX() {
   if [[ $miktexFlag == 1 ]]; then
 
     # Register GPG key for Ubuntu and Linux Mint.
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys $miktexGpgKey
+    sudo apt-key adv \
+         --keyserver hkp://keyserver.ubuntu.com:80 \
+         --recv-keys $miktexGpgKey
 
     # Installation source: Ubuntu 18.04, Linux Mint 19.
     echo "deb http://miktex.org/download/${miktexSource}" \
