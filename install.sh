@@ -13,19 +13,25 @@ main() {
   updateOS
   installDefaultPackages
   configureGit
-  initProfile
+
+  installHosts
+  installProfile
+  installResolvConf
+  installWslConf
+
   installMikTeX
   installTexLive
-  installWslConfig
-  installHosts
   installXWindows
   installRbEnv
   installRubyBuild
+
   updateBashRc
+
   installRuby
   installRubyGems
   installRust
   installRustPrograms
+
   personalizeOS
 }
 
@@ -33,10 +39,13 @@ main() {
 # {{{ Source configuraiton options.
 
 loadConfig() {
-  [[ -f config ]] \
-    && sudo cat config \
-    && source config \
-    || (echo "config not found." && exit)
+  if [[ -f config ]]; then
+    [[ $echoFlag == 1 ]] && sudo cat config
+    source config
+  else
+    echo "config not found." 
+    exit
+  fi 
 }
 
 # -------------------------------------------------------------------------- }}}
@@ -85,7 +94,7 @@ configureGit() {
 # -------------------------------------------------------------------------- }}}
 # {{{ Initialize .profile
 
-initProfile() {
+installProfile() {
   if [[ $profileFlag == 1 ]]; then
     cp -v .profile $HOME/.
   fi
@@ -142,13 +151,28 @@ installTexLive() {
     # Create ls-R databases
     sudo mktexlsr
 
+    # Init suer tree.
+    tlmgr init-usertree
+
   fi
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Force replace /etc/wsl.config
+# {{{ Force replace /etc/resolve.conf
 
-installWslConfig() {
+installResolvConf() {
+  if [[ $resolvFlag == 1 ]]; then
+    [[ -f resolv.conf ]] \
+      && sudo cp -fv resolv.conf /etc/resolv.conf \
+      && echo "/etc/resolv.conf replaced." \
+      || (echo "resolv.conf not found." && exit)
+  fi 
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Force replace /etc/wsl.conf
+
+installWslConf() {
   [[ $wslFlag == 1 ]] \
     && [[ -f wsl.conf ]] \
     && sudo cp -fv wsl.conf /etc/wsl.conf \
@@ -169,11 +193,11 @@ installHosts() {
 # {{{ xWindows Suppport
 #
 # Note: Use PowerShell with Administrator rights.  I use VcXsrv to support
-# X-windows clients when needed.  I use choco to install packages on Windows.
+# X-windows clients when needed.  I use choco to install packages on Windoz.
 # The powershell command is listed for reference only.
 # choco install -y vcxsr
 #
-# X Windos support.
+# X Windoz support.
 
 installXWindows() {
   [[ $xWindowsFlag == 1 ]] \
