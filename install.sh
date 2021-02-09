@@ -195,7 +195,7 @@ installHosts() {
 # Note: Use PowerShell with Administrator rights.  I use VcXsrv to support
 # X-windows clients when needed.  I use choco to install packages on Windoz.
 # The powershell command is listed for reference only.
-# choco install -y vcxsr
+# choco install -y vcxsrv
 #
 # X Windoz support.
 
