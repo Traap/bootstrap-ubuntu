@@ -1,13 +1,11 @@
-#!/bin/bash
-# {{{ Useful URLs 
+#!/bin/bash # {{{ Useful URLs 
 #
 # Useful documentation.
 #   https://miktex.org/howto/install-miktex-unx
 #   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 #
 # -------------------------------------------------------------------------- }}}
-# {{{ Define products to install. 
-#
+# {{{ Define products to install.  #
 # Notes:
 #   1) 0 == false && 1 == true ... Duh!
 #   2) Options are listed alphabetically only because I scan them faster.

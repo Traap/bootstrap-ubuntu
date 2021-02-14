@@ -6,7 +6,7 @@
 #   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Main function 
+# {{{ Main function
 
 main() {
   loadConfig
@@ -32,6 +32,9 @@ main() {
   installRust
   installRustPrograms
 
+  installMutt
+
+
   personalizeOS
 }
 
@@ -43,9 +46,9 @@ loadConfig() {
     [[ $echoFlag == 1 ]] && sudo cat config
     source config
   else
-    echo "config not found." 
+    echo "config not found."
     exit
-  fi 
+  fi
 }
 
 # -------------------------------------------------------------------------- }}}
@@ -85,9 +88,9 @@ configureGit() {
   if [[ $gitconfigFlag == 1 ]]; then
     git config --global user.email "$gitEmail"
     git config --global user.name "$gitName"
-    git config --global credential.helper cache 
+    git config --global credential.helper cache
     git config --global credential.helper 'cache --timeout=32000'
-    git config --global core.editor vim 
+    git config --global core.editor vim
   fi
 }
 
@@ -116,7 +119,7 @@ installMikTeX() {
       | sudo tee /etc/apt/sources.list.d/miktex.list
 
     # Update database
-    sudo apt-get update 
+    sudo apt-get update
 
     # MiKTeX
     sudo apt-get -y install \
@@ -136,7 +139,7 @@ installMikTeX() {
 installTexLive() {
   if [[ $texliveFlag == 1 ]]; then
 
-    # TexLive compnents 
+    # TexLive compnents
     sudo apt-get -y install \
                     texlive \
                     texlive-latex-extra \
@@ -166,7 +169,7 @@ installResolvConf() {
       && sudo cp -fv resolv.conf /etc/resolv.conf \
       && echo "/etc/resolv.conf replaced." \
       || (echo "resolv.conf not found." && exit)
-  fi 
+  fi
 }
 
 # -------------------------------------------------------------------------- }}}
@@ -236,7 +239,7 @@ installRbEnv() {
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Install Ruby Build 
+# {{{ Install Ruby Build
 
 installRubyBuild() {
   if [[ $rbenvFlag == 1 ]]; then
@@ -262,7 +265,7 @@ updateBashRc() {
     # Update path, rbenv, and shell
     export PATH=$HOME/.rbenv/bin:$PATH
     eval "$(rbenv init -)"
-    source $HOME/.bashrc 
+    source $HOME/.bashrc
     echo "Path and rbenv loaded with new shell."
 
   fi
@@ -288,7 +291,7 @@ installRuby() {
 installRubyGems() {
   if [[ $rbenvFlag == 1 ]]; then
 
-    # Install Ruby Gems 
+    # Install Ruby Gems
     gem install \
         bundler \
         rake \
@@ -299,13 +302,13 @@ installRubyGems() {
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Install Rust 
+# {{{ Install Rust
 
 installRust() {
   if [[ $rustFlag == 1 ]]; then
 
     echo "Install rust from a subshell."
-    ( 
+    (
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     )
 
@@ -324,7 +327,32 @@ installRustPrograms() {
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Personalize debian 
+# {{{ Install Mutt 
+
+installMutt() {
+  if [[ $muttFlag == 1 ]]; then
+
+    sudo apt-get install -y \
+         neomutt \
+         curl \
+         isync \
+         msmtp \
+         pass
+
+    git clone https://github.com/LukeSmithxyz/mutt-wizard
+
+    cd mutt-wizard
+
+    sudo make install
+
+    echo "neomutt and mutt-wizzard are installed."
+    echo "You must run the mutt-wizzard manually."
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Personalize debian
 
 personalizeOS() {
   if [[ $emendFlag == 1 ]]; then
@@ -332,7 +360,7 @@ personalizeOS() {
     echo "Personalization of debian.";
 
     echo "Install and build emend from a subshell."
-    ( 
+    (
       echo "PATH and rbenv must be known."
       export PATH=$HOME/.rbenv/bin:$PATH
       eval "$(rbenv init -)"
