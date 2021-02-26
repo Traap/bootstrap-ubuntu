@@ -130,6 +130,13 @@ installMikTeX() {
     sudo miktexsetup --shared=yes finish
     sudo initexmf --admin --set-config-value [MPM]AutoInstall=1
 
+    # The MiXTeX team told me to update the package database twice.  See:
+    # https://github.com/MiKTeX/miktex/issues/724 
+    sudo mpm --admin --update
+    mpm --update
+    sudo mpm --admin --update
+    mpm --update
+
   fi
 }
 
