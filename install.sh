@@ -32,9 +32,11 @@ main() {
   installRust
   installRustPrograms
 
+  installGraphViz
+  installJavaJre
   installMutt
 
-
+  installTLDR 
   personalizeOS
 }
 
@@ -131,7 +133,7 @@ installMikTeX() {
     sudo initexmf --admin --set-config-value [MPM]AutoInstall=1
 
     # The MiXTeX team told me to update the package database twice.  See:
-    # https://github.com/MiKTeX/miktex/issues/724 
+    # https://github.com/MiKTeX/miktex/issues/724
     sudo mpm --admin --update
     mpm --update
     sudo mpm --admin --update
@@ -334,7 +336,7 @@ installRustPrograms() {
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Install Mutt 
+# {{{ Install Mutt
 
 installMutt() {
   if [[ $muttFlag == 1 ]]; then
@@ -354,6 +356,43 @@ installMutt() {
 
     echo "neomutt and mutt-wizzard are installed."
     echo "You must run the mutt-wizzard manually."
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install GraphViz
+
+installGraphViz() {
+  if [[ $graphVizFlag == 1 ]]; then
+
+    sudo apt-get install -y \
+      graphviz
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install JavaJre
+
+installJavaJre() {
+  if [[ $javaJreFlag == 1 ]]; then
+
+    sudo apt-get install -y \
+      openjdk-8-jre
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install TLDR 
+
+installTLDR() {
+  if [[ $tldrFlag == 1 ]]; then
+
+    sudo npm install -g tldr
+
+    tldr --update
 
   fi
 }
