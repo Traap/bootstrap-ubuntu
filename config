@@ -6,13 +6,14 @@
 #   https://linuxize.com/post/how-to-install-ruby-on-debian-9/
 #
 # -------------------------------------------------------------------------- }}}
-# {{{ Define products to install.
+# {{{ Notes
 #
 # Notes:
 #   1) 0 == false && 1 == true ... Duh!
 #   2) Options are listed alphabetically only because I scan them faster.
 #
-# {{{ Products to install.
+# -------------------------------------------------------------------------- }}}
+# {{{ Define Products to install.
 
 bashrcFlag=0
 emendFlag=0
@@ -45,5 +46,4 @@ miktexGpgKey='D6BC243565B2087BC3F897C9277A7293F59E4889'
 miktexSource='ubuntu focal universe'
 rubyVersion='3.0.2'
 
-# -------------------------------------------------------------------------- }}}
 # -------------------------------------------------------------------------- }}}
