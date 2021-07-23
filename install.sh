@@ -41,11 +41,11 @@ main() {
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Source configuraiton options.
+# {{{ Load configuraiton options.
 
 loadConfig() {
   if [[ -f config ]]; then
-    [[ $echoFlag == 1 ]] && sudo cat config
+    [[ $echoConfigFlag == 1 ]] && sudo cat config
     source config
   else
     echo "config not found."
