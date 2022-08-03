@@ -36,7 +36,9 @@ main() {
   installJavaJre
   installMutt
 
-  installTLDR 
+  installDbeaver
+
+  installTLDR
   personalizeOS
 }
 
@@ -377,15 +379,36 @@ installGraphViz() {
 
 installJavaJre() {
   if [[ $javaJreFlag == 1 ]]; then
-
-    sudo apt-get install -y \
-      openjdk-8-jre
-
+    sudo apt-get install -y default-jdk
   fi
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Install TLDR 
+# {{{ Install dbeaver
+
+installdbeaver() {
+  if [[ $dbeaverFlag == 1 ]]; then
+
+    # default jdk
+    sudo apt-get install -y default-jdk
+
+    # debian repository.
+    wget -O - https://dbeaver.io/debs/dbeaver.gpg.key \
+         | sudo apt-key add -
+
+    echo "deb https://dbeaver.io/debs/dbeaver-ce /" \
+         | sudo tee /etc/apt/sources.list.d/dbeaver.list
+
+    sudo apt update -y
+
+    sudo apt-get install -y dbeaver-ce
+
+    sudo apt policy -y dbeaver-ce
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install TLDR
 
 installTLDR() {
   if [[ $tldrFlag == 1 ]]; then

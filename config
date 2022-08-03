@@ -16,6 +16,7 @@
 # {{{ Define Products to install.
 
 bashrcFlag=0
+dbeaverFlag=0
 emendFlag=0
 echoConfigFlag=0
 gitconfigFlag=0
