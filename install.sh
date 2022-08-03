@@ -386,7 +386,7 @@ installJavaJre() {
 # -------------------------------------------------------------------------- }}}
 # {{{ Install dbeaver
 
-installdbeaver() {
+installDbeaver() {
   if [[ $dbeaverFlag == 1 ]]; then
 
     # default jdk
