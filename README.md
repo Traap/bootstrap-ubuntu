@@ -9,8 +9,8 @@ Bootstrap Debian or Ubuntu into WSL (Windows Sybsystem for Linux).
 
 ## Prepare to bootstrap Debian or Ubuntu
 ```bash
-git clone https://github.com/Traap/debian-bootstrap
-cd debian-bootstrap
+git clone https://github.com/Traap/bootstrap-ubuntu
+cd bootstrap-ubuntu
 ```
 
 ## Review configuraiton
