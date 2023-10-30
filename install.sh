@@ -14,6 +14,7 @@ main() {
   installDefaultPackages
   configureGit
 
+  installBashGitPrompt
   installHosts
   installProfile
   installResolvConf
@@ -283,6 +284,18 @@ updateBashRc() {
 }
 
 # -------------------------------------------------------------------------- }}}
+# {{{ Install BashGitPrompt
+
+installBashGitPrompt() {
+  if [[ $gitBashPromptFlag == 1 ]]; then
+    say 'Instgall bash-git-prompt.'
+    rm -rf ~/.bash-git-prompt
+    src=https://github.com/magicmonty/bash-git-prompt
+    dst=~/.bash-git-prompt
+    git clone "$src" "$dst"
+  fi
+}
+
 # {{{ Install Ruby
 
 installRuby() {

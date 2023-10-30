@@ -19,13 +19,14 @@ bashrcFlag=0
 dbeaverFlag=0
 emendFlag=0
 echoConfigFlag=0
+gitBashPromptFlag=1
 gitconfigFlag=0
 graphVizFlag=0
 hostsFlag=0
 javaJreFlag=0
 miktexFlag=0
 muttFlag=0
-osUpdateFlag=0
+osUpdateFlag=1
 profileFlag=0
 rbenvFlag=1
 resolvFlag=0
@@ -45,6 +46,6 @@ gitEmail="gary.a.howard@mac.com"
 gitName="Traap"
 miktexGpgKey='D6BC243565B2087BC3F897C9277A7293F59E4889'
 miktexSource='ubuntu focal universe'
-rubyVersion='3.0.2'
+rubyVersion='3.2.2'
 
 # -------------------------------------------------------------------------- }}}
