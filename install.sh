@@ -14,7 +14,7 @@ main() {
   installDefaultPackages
   configureGit
 
-  installBashGitPrompt
+  installHosts
   installHosts
   installProfile
   installResolvConf
@@ -284,7 +284,7 @@ updateBashRc() {
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Install BashGitPrompt
+# {{{ InstgallBashGitPrompt
 
 installBashGitPrompt() {
   if [[ $gitBashPromptFlag == 1 ]]; then
