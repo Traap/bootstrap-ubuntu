@@ -73,14 +73,19 @@ updateOS() {
 installDefaultPackages() {
   if [[ $osUpdateFlag == 1 ]]; then
     sudo apt-get install -y \
+                batcat \
                 curl \
                 dirmngr \
+                exa \
+                fdfind \
                 fzf \
                 gcc \
                 git \
+                golang \
                 make \
                 neovim \
                 npm \
+                python3-venv \
                 ranger \
                 ripgrep
   fi
