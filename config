@@ -9,34 +9,33 @@
 # {{{ Notes
 #
 # Notes:
-#   1) 0 == false && 1 == true ... Duh!
-#   2) Options are listed alphabetically only because I scan them faster.
+#   1) Options are listed alphabetically only because I scan them faster.
 #
 # -------------------------------------------------------------------------- }}}
 # {{{ Define Products to install.
 
-bashrcFlag=0
-dbeaverFlag=0
-emendFlag=0
-echoConfigFlag=0
-gitBashPromptFlag=0
-gitconfigFlag=0
-graphVizFlag=0
-hostsFlag=0
-javaJreFlag=0
-miktexFlag=0
-muttFlag=0
-osUpdateFlag=0
-profileFlag=0
-rbenvFlag=0
-resolvFlag=0
-rustFlag=0
-rustProgramsFlag=0
-texliveFlag=0
-tldrFlag=0
-ubuntuFlag=0
-wslFlag=0
-xWindowsFlag=0
+bashrcFlag=false
+dbeaverFlag=false
+emendFlag=false
+echoConfigFlag=false
+gitBashPromptFlag=false
+gitconfigFlag=false
+graphVizFlag=false
+hostsFlag=false
+javaJreFlag=false
+miktexFlag=false
+muttFlag=false
+osUpdateFlag=false
+profileFlag=false
+rbenvFlag=false
+resolvFlag=false
+rustFlag=false
+rustProgramsFlag=false
+texliveFlag=false
+tldrFlag=false
+ubuntuFlag=false
+wslFlag=false
+xWindowsFlag=false
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Other variables used during product installation.

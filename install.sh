@@ -48,7 +48,7 @@ main() {
 
 loadConfig() {
   if [[ -f config ]]; then
-    [[ $echoConfigFlag == 1 ]] && sudo cat config
+    [[ $echoConfigFlag == true ]] && sudo cat config
     source config
   else
     echo "config not found."
@@ -60,7 +60,7 @@ loadConfig() {
 # {{{ Update OS
 
 updateOS() {
-  if [[ $osUpdateFlag == 1 ]]; then
+  if [[ $osUpdateFlag == true ]]; then
     sudo apt-get -y update
     sudo apt-get -y upgrade
     sudo apt-get -y autoremove
@@ -71,7 +71,7 @@ updateOS() {
 # {{{ Install my default packages.
 
 installDefaultPackages() {
-  if [[ $osUpdateFlag == 1 ]]; then
+  if [[ $osUpdateFlag == true ]]; then
     sudo apt-get install -y \
                 batcat \
                 curl \
@@ -95,7 +95,7 @@ installDefaultPackages() {
 # {{{ Configure git email and user.
 
 configureGit() {
-  if [[ $gitconfigFlag == 1 ]]; then
+  if [[ $gitconfigFlag == true ]]; then
     git config --global user.email "$gitEmail"
     git config --global user.name "$gitName"
     git config --global credential.helper cache
@@ -108,7 +108,7 @@ configureGit() {
 # {{{ Initialize .profile
 
 installProfile() {
-  if [[ $profileFlag == 1 ]]; then
+  if [[ $profileFlag == true ]]; then
     cp -v .profile $HOME/.
   fi
 }
@@ -117,7 +117,7 @@ installProfile() {
 # {{{ MiKTeX
 
 installMikTeX() {
-  if [[ $miktexFlag == 1 ]]; then
+  if [[ $miktexFlag == true ]]; then
 
     # Register GPG key for Ubuntu and Linux Mint.
     sudo apt-key adv \
@@ -154,7 +154,7 @@ installMikTeX() {
 # {{{ TexLive
 
 installTexLive() {
-  if [[ $texliveFlag == 1 ]]; then
+  if [[ $texliveFlag == true ]]; then
 
     # TexLive compnents
     sudo apt-get -y install \
@@ -181,7 +181,7 @@ installTexLive() {
 # {{{ Force replace /etc/resolve.conf
 
 installResolvConf() {
-  if [[ $resolvFlag == 1 ]]; then
+  if [[ $resolvFlag == true ]]; then
     [[ -f resolv.conf ]] \
       && sudo cp -fv resolv.conf /etc/resolv.conf \
       && echo "/etc/resolv.conf replaced." \
@@ -193,7 +193,7 @@ installResolvConf() {
 # {{{ Force replace /etc/wsl.conf
 
 installWslConf() {
-  [[ $wslFlag == 1 ]] \
+  [[ $wslFlag == true ]] \
     && [[ -f wsl.conf ]] \
     && sudo cp -fv wsl.conf /etc/wsl.conf \
     && echo "/etc/wsl.conf replaced."
@@ -203,14 +203,14 @@ installWslConf() {
 # {{{ Force replace /etc/hosts
 
 installHosts() {
-  [[ $hostsFlag == 1 ]] \
+  [[ $hostsFlag == true ]] \
     && [[ -f hosts ]] \
     && sudo cp -fv hosts /etc/hosts \
     && echo "/etc/hosts replaced."
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ xWindows Suppport
+# {{{ xWindows Supppor
 #
 # Note: Use PowerShell with Administrator rights.  I use VcXsrv to support
 # X-windows clients when needed.  I use choco to install packages on Windoz.
@@ -220,7 +220,7 @@ installHosts() {
 # X Windoz support.
 
 installXWindows() {
-  [[ $xWindowsFlag == 1 ]] \
+  [[ $xWindowsFlag == true ]] \
     && sudo sudo apt-get install -y vim-gtk xsel \
     && echo "X Windows support installed."
 }
@@ -229,7 +229,7 @@ installXWindows() {
 # {{{ Install rbenv
 
 installRbEnv() {
-  if [[ $rbenvFlag == 1 ]]; then
+  if [[ $rbenvFlag == true ]]; then
 
     # Install rbenv dependencies.
     sudo apt-get -y install \
@@ -259,7 +259,7 @@ installRbEnv() {
 # {{{ Install Ruby Build
 
 installRubyBuild() {
-  if [[ $rbenvFlag == 1 ]]; then
+  if [[ $rbenvFlag == true ]]; then
 
     git clone https://github.com/rbenv/ruby-build.git \
         $HOME/.rbenv/plugins/ruby-build
@@ -273,7 +273,7 @@ installRubyBuild() {
 # {{{ Update .bashrc
 
 updateBashRc() {
-  if [[ $rbenvFlag == 1 ]]; then
+  if [[ $rbenvFlag == true ]]; then
 
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc
     echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
@@ -292,7 +292,7 @@ updateBashRc() {
 # {{{ InstgallBashGitPrompt
 
 installBashGitPrompt() {
-  if [[ $gitBashPromptFlag == 1 ]]; then
+  if [[ $gitBashPromptFlag == true ]]; then
     say 'Instgall bash-git-prompt.'
     rm -rf ~/.bash-git-prompt
     src=https://github.com/magicmonty/bash-git-prompt
@@ -304,7 +304,7 @@ installBashGitPrompt() {
 # {{{ Install Ruby
 
 installRuby() {
-  if [[ $rbenvFlag == 1 ]]; then
+  if [[ $rbenvFlag == true ]]; then
 
     rbenv init
     rbenv install $rubyVersion
@@ -318,7 +318,7 @@ installRuby() {
 # {{{ Install Ruby Gems
 
 installRubyGems() {
-  if [[ $rbenvFlag == 1 ]]; then
+  if [[ $rbenvFlag == true ]]; then
 
     # Install Ruby Gems
     gem install \
@@ -334,7 +334,7 @@ installRubyGems() {
 # {{{ Install Rust
 
 installRust() {
-  if [[ $rustFlag == 1 ]]; then
+  if [[ $rustFlag == true ]]; then
 
     echo "Install rust from a subshell."
     (
@@ -348,7 +348,7 @@ installRust() {
 # {{{ Install RustPrograms
 
 installRustPrograms() {
-  if [[ $rustProgramsFlag == 1 ]]; then
+  if [[ $rustProgramsFlag == true ]]; then
 
     cargo install exa
 
@@ -359,7 +359,7 @@ installRustPrograms() {
 # {{{ Install Mutt
 
 installMutt() {
-  if [[ $muttFlag == 1 ]]; then
+  if [[ $muttFlag == true ]]; then
 
     sudo apt-get install -y \
          neomutt \
@@ -384,7 +384,7 @@ installMutt() {
 # {{{ Install GraphViz
 
 installGraphViz() {
-  if [[ $graphVizFlag == 1 ]]; then
+  if [[ $graphVizFlag == true ]]; then
 
     sudo apt-get install -y \
       graphviz
@@ -396,7 +396,7 @@ installGraphViz() {
 # {{{ Install JavaJre
 
 installJavaJre() {
-  if [[ $javaJreFlag == 1 ]]; then
+  if [[ $javaJreFlag == true ]]; then
     sudo apt-get install -y default-jdk
   fi
 }
@@ -405,7 +405,7 @@ installJavaJre() {
 # {{{ Install dbeaver
 
 installDbeaver() {
-  if [[ $dbeaverFlag == 1 ]]; then
+  if [[ $dbeaverFlag == true ]]; then
 
     # default jdk
     sudo apt-get install -y default-jdk
@@ -429,7 +429,7 @@ installDbeaver() {
 # {{{ Install TLDR
 
 installTLDR() {
-  if [[ $tldrFlag == 1 ]]; then
+  if [[ $tldrFlag == true ]]; then
 
     sudo npm install -g tldr
 
@@ -442,7 +442,7 @@ installTLDR() {
 # {{{ Personalize debian
 
 personalizeOS() {
-  if [[ $emendFlag == 1 ]]; then
+  if [[ $emendFlag == true ]]; then
 
     echo "Personalization of debian.";
 
