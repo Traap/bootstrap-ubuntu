@@ -16,7 +16,6 @@
 
 bashrcFlag=false
 dbeaverFlag=false
-emendFlag=false
 echoConfigFlag=false
 gitBashPromptFlag=false
 gitconfigFlag=false

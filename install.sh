@@ -20,7 +20,7 @@ main() {
   configureGit
 
   # Install application software.
-  installHosts
+  installBashGitPrompt
   installHosts
   installProfile
   installResolvConf
@@ -52,12 +52,15 @@ main() {
   createSymLinks
 
   # Configure ssh
+  stopWslAutogeneration
   installSshDir
   generateSshHostKey
   setSshPermissions
 
   # Personalize
-  personalizeOS
+  loadTmuxPlugins
+  loadNeovimPlugins
+  loadVimPlugins
 }
 
 # -------------------------------------------------------------------------- }}}
@@ -81,6 +84,157 @@ updateOS() {
     sudo apt-get -y update
     sudo apt-get -y upgrade
     sudo apt-get -y autoremove
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install BashGitPrompt
+
+installBashGitPrompt() {
+  if [[ $gitBashPromptFlag == true ]]; then
+    say 'Instgall bash-git-prompt.'
+    rm -rf ~/.bash-git-prompt
+    src=https://github.com/magicmonty/bash-git-prompt
+    dst=~/.bash-git-prompt
+    git clone "$src" "$dst"
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install Ruby
+
+installRuby() {
+  if [[ $rbenvFlag == true ]]; then
+
+    rbenv init
+    rbenv install $rubyVersion
+    rbenv global $rubyVersion
+
+    echo "Ruby installed."
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install Ruby Gems
+
+installRubyGems() {
+  if [[ $rbenvFlag == true ]]; then
+
+    # Install Ruby Gems
+    gem install \
+        bundler \
+        rake \
+        rspec
+
+    echo "Ruby Gems installed."
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install Rust
+
+installRust() {
+  if [[ $rustFlag == true ]]; then
+
+    echo "Install rust from a subshell."
+    (
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    )
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install RustPrograms
+
+installRustPrograms() {
+  if [[ $rustProgramsFlag == true ]]; then
+
+    cargo install exa
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install Mutt
+
+installMutt() {
+  if [[ $muttFlag == true ]]; then
+
+    sudo apt-get install -y \
+         neomutt \
+         curl \
+         isync \
+         msmtp \
+         pass
+
+    git clone https://github.com/LukeSmithxyz/mutt-wizard
+
+    cd mutt-wizard
+
+    sudo make install
+
+    echo "neomutt and mutt-wizzard are installed."
+    echo "You must run the mutt-wizzard manually."
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install GraphViz
+
+installGraphViz() {
+  if [[ $graphVizFlag == true ]]; then
+
+    sudo apt-get install -y \
+      graphviz
+
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install JavaJre
+
+installJavaJre() {
+  if [[ $javaJreFlag == true ]]; then
+    sudo apt-get install -y default-jdk
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install dbeaver
+
+installDbeaver() {
+  if [[ $dbeaverFlag == true ]]; then
+
+    # default jdk
+    sudo apt-get install -y default-jdk
+
+    # debian repository.
+    wget -O - https://dbeaver.io/debs/dbeaver.gpg.key \
+         | sudo apt-key add -
+
+    echo "deb https://dbeaver.io/debs/dbeaver-ce /" \
+         | sudo tee /etc/apt/sources.list.d/dbeaver.list
+
+    sudo apt update -y
+
+    sudo apt-get install -y dbeaver-ce
+
+    sudo apt policy -y dbeaver-ce
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Install TLDR
+
+installTLDR() {
+  if [[ $tldrFlag == true ]]; then
+
+    sudo npm install -g tldr
+
+    tldr --update
+
   fi
 }
 
@@ -315,6 +469,82 @@ installTexLive() {
 }
 
 # -------------------------------------------------------------------------- }}}
+# {{{ Stop WSL Autogeneration
+
+stopWslAutogeneration () {
+  if [[ $wslFlag == true ]]; then
+    say 'Stop WSL autogeneration'
+    cd "$cwd" || exit
+
+    # Copy host and resolv.conf to /etc.
+    sudo cp -v hosts /etc/.
+
+    # TODO: Not supported yet.
+    # sudo cp -v resolv.conf /etc/.
+
+    # Create wsl.conf from template.
+    template=wsl-template.conf
+    conf=/etc/wsl.conf
+    sudo cp -v $template $conf
+
+    # Replace wsl-template.conf/WSL-[HOST|USER]-Name with
+    #         bootstrap-archlinux/config/$wsl[Host|User]Name
+    sudo sed -i "s/WSL-HOST-NAME/$wslHostName/g" $conf
+    sudo sed -i "s/WSL-USER-NAME/$wslUserName/g" $conf
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Make and configure ssh directory.
+
+installSshDir() {
+  if [[ $sshDirFlag == true ]]; then
+    say 'Initialize .ssh/config.'
+    mkdir -p "$cloneRoot/ssh"
+
+    # Create ssh/config from template.
+    template=ssh-config-template
+    config=$cloneRoot/ssh/config
+    cp -v "$template" "$config"
+
+    # Repace ssh-config-template/GIT-USER-NAME with
+    #        bootstrap-archlinux/config/$gitUserName
+    sed -i "s/GIT-USER-NAME/$gitUserName/g" "$config"
+
+    # Repace ssh-config-template/WSL-HOST-NAME with
+    #        bootstrap-archlinux/config/$wslHostName
+    sed -i "s/WSL-HOST-NAME/$wslHostName/g" "$config"
+
+    say 'Initialize .ssh/config.vim'
+    touch "$cloneRoot/ssh/config.vim"
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Generate sshkey for this host
+
+generateSshHostKey () {
+  if [[ $sshHostKeyFlag == true ]]; then
+    say 'Generate ssh host key.'
+    mkdir -p "$cloneRoot/ssh"
+    ssh-keygen -f "$cloneRoot/ssh/$wslHostName"
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Set sshkey permissions
+
+setSshPermissions() {
+
+  if [[ $sshHostKeyFlag == true ]]; then
+    say 'Setting ssh permissions.'
+    chmod 600 "$cloneRoot/ssh/$wslHostName"
+    chmod 644 "$cloneRoot/ssh/$wslHostName.pub"
+  fi
+  # chmod 700 $cloneRoot/ssh/.git
+}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Force replace /etc/resolve.conf
 
 installResolvConf() {
@@ -410,194 +640,32 @@ updateBashRc() {
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ InstgallBashGitPrompt
+# {{{ loadNeovimluginsconf
 
-installBashGitPrompt() {
-  if [[ $gitBashPromptFlag == true ]]; then
-    say 'Instgall bash-git-prompt.'
-    rm -rf ~/.bash-git-prompt
-    src=https://github.com/magicmonty/bash-git-prompt
-    dst=~/.bash-git-prompt
-    git clone "$src" "$dst"
-  fi
-}
-
-# {{{ Install Ruby
-
-installRuby() {
-  if [[ $rbenvFlag == true ]]; then
-
-    rbenv init
-    rbenv install $rubyVersion
-    rbenv global $rubyVersion
-
-    echo "Ruby installed."
+loadNeovimPlugins() {
+  if [[ $neovimPluginsFlag == true ]]; then
+    say 'Loading neovim plugins.'
+    nvim
   fi
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Install Ruby Gems
+# {{{ loadTmuxPlugins
 
-installRubyGems() {
-  if [[ $rbenvFlag == true ]]; then
-
-    # Install Ruby Gems
-    gem install \
-        bundler \
-        rake \
-        rspec
-
-    echo "Ruby Gems installed."
+loadTmuxPlugins() {
+  if [[ $tmuxPluginsFlag == true ]]; then
+    say 'Loading TMUX plugins.'
+    ~/.tmux/plugins/tpm/bin/install_plugins
   fi
 }
 
 # -------------------------------------------------------------------------- }}}
-# {{{ Install Rust
+# {{{ loadVimPlugins
 
-installRust() {
-  if [[ $rustFlag == true ]]; then
-
-    echo "Install rust from a subshell."
-    (
-      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    )
-
-  fi
-}
-
-# -------------------------------------------------------------------------- }}}
-# {{{ Install RustPrograms
-
-installRustPrograms() {
-  if [[ $rustProgramsFlag == true ]]; then
-
-    cargo install exa
-
-  fi
-}
-
-# -------------------------------------------------------------------------- }}}
-# {{{ Install Mutt
-
-installMutt() {
-  if [[ $muttFlag == true ]]; then
-
-    sudo apt-get install -y \
-         neomutt \
-         curl \
-         isync \
-         msmtp \
-         pass
-
-    git clone https://github.com/LukeSmithxyz/mutt-wizard
-
-    cd mutt-wizard
-
-    sudo make install
-
-    echo "neomutt and mutt-wizzard are installed."
-    echo "You must run the mutt-wizzard manually."
-
-  fi
-}
-
-# -------------------------------------------------------------------------- }}}
-# {{{ Install GraphViz
-
-installGraphViz() {
-  if [[ $graphVizFlag == true ]]; then
-
-    sudo apt-get install -y \
-      graphviz
-
-  fi
-}
-
-# -------------------------------------------------------------------------- }}}
-# {{{ Install JavaJre
-
-installJavaJre() {
-  if [[ $javaJreFlag == true ]]; then
-    sudo apt-get install -y default-jdk
-  fi
-}
-
-# -------------------------------------------------------------------------- }}}
-# {{{ Install dbeaver
-
-installDbeaver() {
-  if [[ $dbeaverFlag == true ]]; then
-
-    # default jdk
-    sudo apt-get install -y default-jdk
-
-    # debian repository.
-    wget -O - https://dbeaver.io/debs/dbeaver.gpg.key \
-         | sudo apt-key add -
-
-    echo "deb https://dbeaver.io/debs/dbeaver-ce /" \
-         | sudo tee /etc/apt/sources.list.d/dbeaver.list
-
-    sudo apt update -y
-
-    sudo apt-get install -y dbeaver-ce
-
-    sudo apt policy -y dbeaver-ce
-  fi
-}
-
-# -------------------------------------------------------------------------- }}}
-# {{{ Install TLDR
-
-installTLDR() {
-  if [[ $tldrFlag == true ]]; then
-
-    sudo npm install -g tldr
-
-    tldr --update
-
-  fi
-}
-
-# -------------------------------------------------------------------------- }}}
-# {{{ Personalize debian
-
-personalizeOS() {
-  if [[ $emendFlag == true ]]; then
-
-    echo "Personalization of debian.";
-
-    echo "Install and build emend from a subshell."
-    (
-      echo "PATH and rbenv must be known."
-      export PATH=$HOME/.rbenv/bin:$PATH
-      eval "$(rbenv init -)"
-
-      echo "Clone emend";
-      mkdir -p $cloneRoot;
-      cd $cloneRoot;
-      git clone http://github.com/Traap/emend.git;
-
-      echo "Build and install emend";
-      cd emend;
-      rake build:emend;
-    )
-
-    echo "Emend this computer from a subshell."
-    (
-      echo "PATH and rbenv must be known."
-      export PATH=$HOME/.rbenv/bin:$PATH
-      eval "$(rbenv init -)"
-
-      echo "Clone emend-computer";
-      cd $cloneRoot;
-      git clone http://github.com/Traap/emend-computer.git;
-
-      echo "Emend this computer";
-      cd emend-computer;
-      emend --verbose --nodryrun --bundle debian;
-    )
-
+loadVimPlugins() {
+  if [[ $vimPluginsFlag == true ]]; then
+    say 'Loading vim plugins.'
+    vim
   fi
 }
 
