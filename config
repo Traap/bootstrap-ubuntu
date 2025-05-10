@@ -30,12 +30,16 @@ profileFlag=false
 rbenvFlag=false
 resolvFlag=false
 rustFlag=false
+sshDirFlag=false
+sshHostKeyFlag=false
+symlinksFlag=false
 rustProgramsFlag=false
 texliveFlag=false
 tldrFlag=false
+tmuxPluginsFlag=false
+vimPluginsFlag=false
 ubuntuFlag=false
 wslFlag=false
-xWindowsFlag=false
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Other variables used during product installation.

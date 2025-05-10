@@ -9,11 +9,17 @@
 # {{{ Main function
 
 main() {
+  # Source configuration files.
   loadConfig
+
+  # Update operating system.
   updateOS
   installDefaultPackages
+
+  # Configure git
   configureGit
 
+  # Install application software.
   installHosts
   installHosts
   installProfile
@@ -40,6 +46,17 @@ main() {
   installDbeaver
 
   installTLDR
+
+  # Setup symlinks.
+  deleteSymLinks
+  createSymLinks
+
+  # Configure ssh
+  installSshDir
+  generateSshHostKey
+  setSshPermissions
+
+  # Personalize
   personalizeOS
 }
 
@@ -110,6 +127,126 @@ configureGit() {
 installProfile() {
   if [[ $profileFlag == true ]]; then
     cp -v .profile $HOME/.
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Delete symbolic links
+
+deleteSymLinks() {
+  if [[ $deleteSymLinksFlag == 1 ]]; then
+    echo "Deleting symbolic links."
+
+    # Symlinks at .config
+    rm -rfv ~/.config/Thunar
+    rm -rfv ~/.config/alacritty
+    rm -rfv ~/.config/autostart
+    rm -rfv ~/.config/bspwm
+    rm -rfv ~/.config/dconf
+    rm -rfv ~/.config/dunst
+    rm -rfv ~/.config/foot
+    rm -rfv ~/.config/ghostty
+    rm -rfv ~/.config/hypr
+    rm -rfv ~/.config/kitty
+    rm -rfv ~/.config/nvim
+    rm -rfv ~/.config/neofetch
+    rm -rfv ~/.config/picom
+    rm -rfv ~/.config/polybar
+    rm -rfv ~/.config/remmina
+    rm -rfv ~/.config/rofi
+    rm -rfv ~/.config/screenkey.json
+    rm -rfv ~/.config/sxhkd
+    rm -rfv ~/.config/volumeicon
+    rm -rfv ~/.config/wallpaper
+    rm -rfv ~/.config/waybar
+    rm -rfv ~/.config/wayfire
+    rm -rfv ~/.config/wayfire.ini
+    rm -rfv ~/.config/wezterm
+    rm -rfv ~/.config/wlogout
+    rm -rfv ~/.config/wofi
+    rm -rfv ~/.config/wofifull
+    rm -rfv ~/.config/swaylock
+
+    # Symlinks at $HOME
+    rm -rfv ~/.bash_logout
+    rm -rfv ~/.bash_profile
+    rm -rfv ~/.bashrc
+    rm -rfv ~/.bashrc_personal
+    rm -rfv ~/.config.vim
+    rm -rfv ~/.dircolors
+    rm -rfv ~/.gitconfig
+    rm -rfv ~/.gitignore_global
+    rm -rfv ~/.inputrc
+    rm -rfv ~/.latexmkrc
+    # rm -rfv ~/.mailcap
+    # rm -rfv ~/.muttrc
+    rm -rfv ~/.ssh
+    rm -rfv ~/.tmux
+    rm -rfv ~/.tmux.conf
+    rm -rfv ~/.vim
+    rm -rfv ~/.vimrc
+    rm -rfv ~/.xinitrc
+    rm -rfv ~/.zshrc
+  fi
+}
+
+# -------------------------------------------------------------------------- }}}
+# {{{ Create symbolic links
+createSymLinks() {
+  if [[ $createSymLinksFlag == 1 ]]; then
+    echo "Creating symbolic links."
+    mkdir -p ~/.config
+
+    # Symlinks at .config
+    ln -fsv ~/git/dotfiles/Thunar                ~/.config/Thunar
+    ln -fsv ~/git/dotfiles/alacritty             ~/.config/alacritty
+    ln -fsv ~/git/dotfiles/autostart             ~/.config/autostart
+    ln -fsv ~/git/dotfiles/bspwm                 ~/.config/bspwm
+    ln -fsv ~/git/dotfiles/dconf                 ~/.config/dconf
+    ln -fsv ~/git/dotfiles/foot                  ~/.config/foot
+    ln -fsv ~/git/dotfiles/dunst                 ~/.config/dunst
+    ln -fsv ~/git/dotfiles/ghostty               ~/.config/ghostty
+    ln -fsv ~/git/dotfiles/hypr                  ~/.config/hypr
+    ln -fsv ~/git/dotfiles/kitty                 ~/.config/kitty
+    ln -fsv ~/git/dotfiles/neofetch              ~/.config/neofetch
+    ln -fsv ~/git/dotfiles/picom                 ~/.config/picom
+    ln -fsv ~/git/dotfiles/polybar               ~/.config/polybar
+    ln -fsv ~/git/dotfiles/remmina               ~/.config/remmina
+    ln -fsv ~/git/dotfiles/rofi                  ~/.config/rofi
+    ln -fsv ~/git/dotfiles/sk/screenkey.json     ~/.config/screenkey.json
+    ln -fsv ~/git/dotfiles/sxhkd                 ~/.config/sxhkd
+    ln -fsv ~/git/dotfiles/volumeicon            ~/.config/volumeicon
+    ln -fsv ~/git/dotfiles/wallpaper             ~/.config/wallpaper
+    ln -fsv ~/git/dotfiles/waybar                ~/.config/waybar
+    ln -fsv ~/git/dotfiles/wayfire               ~/.config/wayfire
+    ln -fsv ~/git/dotfiles/wayfire/wayfire.ini   ~/.config/wayfire.ini
+    ln -fsv ~/git/dotfiles/wayfire/wf-shell.ini  ~/.config/wf-shell.ini
+    ln -fsv ~/git/dotfiles/wezterm               ~/.config/wezterm
+    ln -fsv ~/git/dotfiles/wlogout               ~/.config/wlogout
+    ln -fsv ~/git/dotfiles/wofi                  ~/.config/wofi
+    ln -fsv ~/git/dotfiles/wofifull              ~/.config/wofifull
+    ln -fsv ~/git/dotfiles/swaylock              ~/.config/swaylock
+    ln -fsv ~/git/nvim.traap                     ~/.config/nvim
+
+    # Symlinks at $HOME
+    ln -fsv ~/git/dotfiles/bash/bash_logout      ~/.bash_logout
+    ln -fsv ~/git/dotfiles/bash/bash_profile     ~/.bash_profile
+    ln -fsv ~/git/dotfiles/bash/bashrc           ~/.bashrc
+    ln -fsv ~/git/dotfiles/bash/bashrc_personal  ~/.bashrc_personal
+    ln -fsv ~/git/dotfiles/bash/dircolors        ~/.dircolors
+    ln -fsv ~/git/dotfiles/bash/inputrc          ~/.inputrc
+    ln -fsv ~/git/dotfiles/bash/xinitrc          ~/.xinitrc
+    ln -fsv ~/git/dotfiles/git/gitconfig         ~/.gitconfig
+    ln -fsv ~/git/dotfiles/git/gitignore_global  ~/.gitignore_global
+    ln -fsv ~/git/dotfiles/latex/latexmkrc       ~/.latexmkrc
+    # ln -fsv ~/git/mutt/mailcap                   ~/.mailcap
+    # ln -fsv ~/git/mutt/muttrc                    ~/.muttrc
+    ln -fsv ~/git/ssh                            ~/.ssh
+    ln -fsv ~/git/ssh/config.vim                 ~/.config.vim
+    ln -fsv ~/git/tmux                           ~/.tmux
+    ln -fsv ~/git/tmux/tmux.conf                 ~/.tmux.conf
+    ln -fsv ~/git/vim                            ~/.vim
+    ln -fsv ~/git/vim/vimrc                      ~/.vimrc
   fi
 }
 
@@ -207,22 +344,6 @@ installHosts() {
     && [[ -f hosts ]] \
     && sudo cp -fv hosts /etc/hosts \
     && echo "/etc/hosts replaced."
-}
-
-# -------------------------------------------------------------------------- }}}
-# {{{ xWindows Supppor
-#
-# Note: Use PowerShell with Administrator rights.  I use VcXsrv to support
-# X-windows clients when needed.  I use choco to install packages on Windoz.
-# The powershell command is listed for reference only.
-# choco install -y vcxsrv
-#
-# X Windoz support.
-
-installXWindows() {
-  [[ $xWindowsFlag == true ]] \
-    && sudo sudo apt-get install -y vim-gtk xsel \
-    && echo "X Windows support installed."
 }
 
 # -------------------------------------------------------------------------- }}}
